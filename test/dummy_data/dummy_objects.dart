@@ -1,7 +1,10 @@
 import 'package:ditonton/data/models/movie_table.dart';
+import 'package:ditonton/domain/entities/creator.dart';
+import 'package:ditonton/domain/entities/episode.dart';
 import 'package:ditonton/domain/entities/genre.dart';
 import 'package:ditonton/domain/entities/movie.dart';
 import 'package:ditonton/domain/entities/movie_detail.dart';
+import 'package:ditonton/domain/entities/season.dart';
 
 final testMovie = Movie(
   backdropPath: '/pdfCr8W0wBCpdjbZXSxnKhZtosP.jpg',
@@ -25,14 +28,67 @@ final testMovieList = [testMovie];
 final testMovieDetail = MovieDetail(
   adult: false,
   backdropPath: 'backdropPath',
+  createdBy: [
+    Creator(
+        id: 1,
+        creditId: 'creditId',
+        name: 'name',
+        profilePath: 'profilePath')
+  ],
+  episodeRunTime: [1],
   genres: [Genre(id: 1, name: 'Action')],
+  firstAirDate: 'firstAirDate',
+  homepage: "https://google.com",
   id: 1,
-  originalTitle: 'originalTitle',
+  inProduction: true,
+  languages: ['en'],
+  lastAirDate: 'lastAirDate',
+  lastEpisodeToAir: Episode(
+      airDate: 'airDate',
+      episodeNumber: 1,
+      id: 1,
+      name: 'name',
+      overview: 'overview',
+      runtime: 1,
+      seasonNumber: 1,
+      showId: 1,
+      stillPath: 'stillPath',
+      voteAverage: 1.0,
+      voteCount: 1),
+  name: 'name',
+  nextEpisodeToAir: Episode(
+      airDate: 'airDate',
+      episodeNumber: 1,
+      id: 1,
+      name: 'name',
+      overview: 'overview',
+      runtime: 1,
+      seasonNumber: 1,
+      showId: 1,
+      stillPath: 'stillPath',
+      voteAverage: 1.0,
+      voteCount: 1),
+  numberOfEpisodes: 1,
+  numberOfSeasons: 1,
+  originCountry: ['originCountry'],
+  originalLanguage: 'en',
+  originalName: 'originalName',
   overview: 'overview',
+  popularity: 1,
   posterPath: 'posterPath',
-  releaseDate: 'releaseDate',
-  runtime: 120,
-  title: 'title',
+  seasons: [
+    Season(
+        airDate: 'airDate',
+        episodeCount: 1,
+        id: 1,
+        name: 'name',
+        overview: 'overview',
+        posterPath: 'posterPath',
+        seasonNumber: 1)
+  ],
+  status: 'Status',
+  tagline: 'Tagline',
+  type: 'type',
   voteAverage: 1,
   voteCount: 1,
 );
@@ -53,7 +109,7 @@ final testMovieTable = MovieTable(
 
 final testMovieMap = {
   'id': 1,
+  'name': 'name',
   'overview': 'overview',
   'posterPath': 'posterPath',
-  'title': 'title',
 };

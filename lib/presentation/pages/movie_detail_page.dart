@@ -102,7 +102,7 @@ class DetailContent extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              movie.title,
+                              movie.name,
                               style: kHeading5,
                             ),
                             ElevatedButton(
@@ -156,7 +156,7 @@ class DetailContent extends StatelessWidget {
                               _showGenres(movie.genres),
                             ),
                             Text(
-                              _showDuration(movie.runtime),
+                              _showDuration(movie.episodeRunTime.first),
                             ),
                             Row(
                               children: [

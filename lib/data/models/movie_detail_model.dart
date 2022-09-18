@@ -1,116 +1,110 @@
-import 'package:ditonton/data/models/genre_model.dart';
+import 'dart:core';
+
 import 'package:ditonton/domain/entities/movie_detail.dart';
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+import 'creator_model.dart';
+import 'episode_model.dart';
+import 'genre_model.dart';
+import 'season_model.dart';
+
+part 'movie_detail_model.g.dart';
+
+@JsonSerializable(fieldRename: FieldRename.snake)
 class MovieDetailResponse extends Equatable {
   MovieDetailResponse({
     required this.adult,
     required this.backdropPath,
-    required this.budget,
+    required this.createdBy,
+    required this.episodeRunTime,
+    required this.firstAirDate,
     required this.genres,
     required this.homepage,
     required this.id,
-    required this.imdbId,
+    required this.inProduction,
+    required this.languages,
+    required this.lastAirDate,
+    required this.lastEpisodeToAir,
+    required this.name,
+    required this.nextEpisodeToAir,
+    required this.numberOfEpisodes,
+    required this.numberOfSeasons,
+    required this.originCountry,
     required this.originalLanguage,
-    required this.originalTitle,
+    required this.originalName,
     required this.overview,
     required this.popularity,
     required this.posterPath,
-    required this.releaseDate,
-    required this.revenue,
-    required this.runtime,
+    required this.seasons,
     required this.status,
     required this.tagline,
-    required this.title,
-    required this.video,
+    required this.type,
     required this.voteAverage,
     required this.voteCount,
   });
 
   final bool adult;
   final String? backdropPath;
-  final int budget;
+  final List<CreatorModel> createdBy;
+  final List<int> episodeRunTime;
+  final String firstAirDate;
   final List<GenreModel> genres;
-  final String homepage;
+  final String? homepage;
   final int id;
-  final String? imdbId;
+  final bool inProduction;
+  final List<String> languages;
+  final String? lastAirDate;
+  final EpisodeModel? lastEpisodeToAir;
+  final String name;
+  final EpisodeModel? nextEpisodeToAir;
+  final int numberOfEpisodes;
+  final int numberOfSeasons;
+  final List<String> originCountry;
   final String originalLanguage;
-  final String originalTitle;
+  final String originalName;
   final String overview;
   final double popularity;
   final String posterPath;
-  final String releaseDate;
-  final int revenue;
-  final int runtime;
+  final List<SeasonModel> seasons;
   final String status;
   final String tagline;
-  final String title;
-  final bool video;
+  final String type;
   final double voteAverage;
   final int voteCount;
 
-  factory MovieDetailResponse.fromJson(Map<String, dynamic> json) =>
-      MovieDetailResponse(
-        adult: json["adult"],
-        backdropPath: json["backdrop_path"],
-        budget: json["budget"],
-        genres: List<GenreModel>.from(
-            json["genres"].map((x) => GenreModel.fromJson(x))),
-        homepage: json["homepage"],
-        id: json["id"],
-        imdbId: json["imdb_id"],
-        originalLanguage: json["original_language"],
-        originalTitle: json["original_title"],
-        overview: json["overview"],
-        popularity: json["popularity"].toDouble(),
-        posterPath: json["poster_path"],
-        releaseDate: json["release_date"],
-        revenue: json["revenue"],
-        runtime: json["runtime"],
-        status: json["status"],
-        tagline: json["tagline"],
-        title: json["title"],
-        video: json["video"],
-        voteAverage: json["vote_average"].toDouble(),
-        voteCount: json["vote_count"],
-      );
+  factory MovieDetailResponse.fromJson(Map<String, dynamic> json) => _$MovieDetailResponseFromJson(json);
 
-  Map<String, dynamic> toJson() => {
-        "adult": adult,
-        "backdrop_path": backdropPath,
-        "budget": budget,
-        "genres": List<dynamic>.from(genres.map((x) => x.toJson())),
-        "homepage": homepage,
-        "id": id,
-        "imdb_id": imdbId,
-        "original_language": originalLanguage,
-        "original_title": originalTitle,
-        "overview": overview,
-        "popularity": popularity,
-        "poster_path": posterPath,
-        "release_date": releaseDate,
-        "revenue": revenue,
-        "runtime": runtime,
-        "status": status,
-        "tagline": tagline,
-        "title": title,
-        "video": video,
-        "vote_average": voteAverage,
-        "vote_count": voteCount,
-      };
+  Map<String, dynamic> toJson() => _$MovieDetailResponseToJson(this);
 
   MovieDetail toEntity() {
     return MovieDetail(
       adult: this.adult,
       backdropPath: this.backdropPath,
-      genres: this.genres.map((genre) => genre.toEntity()).toList(),
+      createdBy: this.createdBy.map((e) => e.toEntity()).toList(),
+      episodeRunTime: this.episodeRunTime,
+      firstAirDate: this.firstAirDate,
+      genres: this.genres.map((e) => e.toEntity()).toList(),
+      homepage: this.homepage,
       id: this.id,
-      originalTitle: this.originalTitle,
+      inProduction: this.inProduction,
+      languages: this.languages,
+      lastAirDate: this.lastAirDate,
+      lastEpisodeToAir: this.lastEpisodeToAir?.toEntity(),
+      name: this.name,
+      nextEpisodeToAir: this.nextEpisodeToAir?.toEntity(),
+      numberOfEpisodes: this.numberOfEpisodes,
+      numberOfSeasons: this.numberOfSeasons,
+      originCountry: this.originCountry,
+      originalLanguage: this.originalLanguage,
+      originalName: this.originalName,
       overview: this.overview,
+      popularity: this.popularity,
       posterPath: this.posterPath,
-      releaseDate: this.releaseDate,
-      runtime: this.runtime,
-      title: this.title,
+      seasons: this.seasons.map((e) => e.toEntity()).toList(),
+      status: this.status,
+      tagline: this.tagline,
+      type: this.type,
       voteAverage: this.voteAverage,
       voteCount: this.voteCount,
     );
@@ -119,26 +113,33 @@ class MovieDetailResponse extends Equatable {
   @override
   // TODO: implement props
   List<Object?> get props => [
-        adult,
-        backdropPath,
-        budget,
-        genres,
-        homepage,
-        id,
-        imdbId,
-        originalLanguage,
-        originalTitle,
-        overview,
-        popularity,
-        posterPath,
-        releaseDate,
-        revenue,
-        runtime,
-        status,
-        tagline,
-        title,
-        video,
-        voteAverage,
-        voteCount,
+    adult,
+    backdropPath,
+    createdBy,
+    episodeRunTime,
+    firstAirDate,
+    genres,
+    homepage,
+    id,
+    inProduction,
+    languages,
+    lastAirDate,
+    lastEpisodeToAir,
+    name,
+    nextEpisodeToAir,
+    numberOfEpisodes,
+    numberOfSeasons,
+    originCountry,
+    originalLanguage,
+    originalName,
+    overview,
+    popularity,
+    posterPath,
+    seasons,
+    status,
+    tagline,
+    type,
+    voteAverage,
+    voteCount,
       ];
 }
