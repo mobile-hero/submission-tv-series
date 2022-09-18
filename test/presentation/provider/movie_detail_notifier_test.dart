@@ -52,17 +52,17 @@ void main() {
   final tId = 1;
 
   final tMovie = Movie(
-    adult: false,
     backdropPath: 'backdropPath',
+    firstAirDate: 'firstAirDate',
     genreIds: [1, 2, 3],
     id: 1,
-    originalTitle: 'originalTitle',
+    name: 'name',
+    originCountry: ['originCountry'],
+    originalLanguage: 'originalLanguage',
+    originalName: 'originalName',
     overview: 'overview',
     popularity: 1,
     posterPath: 'posterPath',
-    releaseDate: 'releaseDate',
-    title: 'title',
-    video: false,
     voteAverage: 1,
     voteCount: 1,
   );

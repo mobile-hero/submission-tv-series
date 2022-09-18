@@ -26,23 +26,23 @@ void main() {
   });
 
   final tMovieModel = Movie(
-    adult: false,
-    backdropPath: '/muth4OYamXf41G2evdrLEg8d3om.jpg',
-    genreIds: [14, 28],
-    id: 557,
-    originalTitle: 'Spider-Man',
+    backdropPath: '/pdfCr8W0wBCpdjbZXSxnKhZtosP.jpg',
+    firstAirDate: '2022-09-01',
+    genreIds: [10765, 10759, 18],
+    id: 84773,
+    name: 'The Lord of the Rings: The Rings of Power',
+    originCountry: ['US'],
+    originalName: 'The Lord of the Rings: The Rings of Power',
+    originalLanguage: 'en',
     overview:
-        'After being bitten by a genetically altered spider, nerdy high school student Peter Parker is endowed with amazing powers to become the Amazing superhero known as Spider-Man.',
-    popularity: 60.441,
-    posterPath: '/rweIrveL43TaxUN0akQEaAXL6x0.jpg',
-    releaseDate: '2002-05-01',
-    title: 'Spider-Man',
-    video: false,
-    voteAverage: 7.2,
-    voteCount: 13507,
+    'Beginning in a time of relative peace, we follow an ensemble cast of characters as they confront the re-emergence of evil to Middle-earth. From the darkest depths of the Misty Mountains, to the majestic forests of Lindon, to the breathtaking island kingdom of Númenor, to the furthest reaches of the map, these kingdoms and characters will carve out legacies that live on long after they are gone.',
+    popularity: 6073.331,
+    posterPath: '/suyNxglk17Cpk8rCM2kZgqKdftk.jpg',
+    voteAverage: 7.6,
+    voteCount: 619,
   );
   final tMovieList = <Movie>[tMovieModel];
-  final tQuery = 'spiderman';
+  final tQuery = 'the rings of power';
 
   group('search movies', () {
     test('should change state to loading when usecase is called', () async {

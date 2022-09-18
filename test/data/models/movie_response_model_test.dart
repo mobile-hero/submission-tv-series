@@ -8,22 +8,22 @@ import '../../json_reader.dart';
 
 void main() {
   final tMovieModel = MovieModel(
-    adult: false,
-    backdropPath: "/path.jpg",
+    backdropPath: '/backdrop.jpg',
+    firstAirDate: '2022-06-06',
     genreIds: [1, 2, 3, 4],
     id: 1,
-    originalTitle: "Original Title",
-    overview: "Overview",
+    name: 'Name',
+    originCountry: ['Origin Country'],
+    originalLanguage: 'en',
+    originalName: 'Original Name',
+    overview: 'Overview',
     popularity: 1.0,
-    posterPath: "/path.jpg",
-    releaseDate: "2020-05-05",
-    title: "Title",
-    video: false,
+    posterPath: '/poster.jpg',
     voteAverage: 1.0,
     voteCount: 1,
   );
   final tMovieResponseModel =
-      MovieResponse(movieList: <MovieModel>[tMovieModel]);
+      MovieResponse(results: <MovieModel>[tMovieModel]);
   group('fromJson', () {
     test('should return a valid model from JSON', () async {
       // arrange
@@ -46,17 +46,17 @@ void main() {
       final expectedJsonMap = {
         "results": [
           {
-            "adult": false,
-            "backdrop_path": "/path.jpg",
+            "backdrop_path": "/backdrop.jpg",
+            "first_air_date": "2022-06-06",
             "genre_ids": [1, 2, 3, 4],
             "id": 1,
-            "original_title": "Original Title",
+            "name": "Name",
+            "origin_country": ["Origin Country"],
+            "original_language": "en",
+            "original_name": "Original Name",
             "overview": "Overview",
             "popularity": 1.0,
-            "poster_path": "/path.jpg",
-            "release_date": "2020-05-05",
-            "title": "Title",
-            "video": false,
+            "poster_path": "/poster.jpg",
             "vote_average": 1.0,
             "vote_count": 1
           }
