@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:ditonton/data/datasources/db/database_helper.dart';
 import 'package:ditonton/data/datasources/movie_local_data_source.dart';
 import 'package:ditonton/data/datasources/movie_remote_data_source.dart';
@@ -11,6 +12,6 @@ import 'package:http/http.dart' as http;
   MovieLocalDataSource,
   DatabaseHelper,
 ], customMocks: [
-  MockSpec<http.Client>(as: #MockHttpClient)
+  MockSpec<Dio>(as: #MockDio)
 ])
 void main() {}
