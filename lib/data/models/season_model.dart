@@ -7,12 +7,12 @@ part 'season_model.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class SeasonModel extends Equatable {
-  final String airDate;
+  final String? airDate;
   final int episodeCount;
   final int id;
   final String name;
   final String overview;
-  final String posterPath;
+  final String? posterPath;
   final int seasonNumber;
 
   SeasonModel({

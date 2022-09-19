@@ -190,16 +190,16 @@ void main() {
 
   group('search movies', () {
     final tSearchResult = MovieResponse.fromJson(
-            json.decode(readJson('dummy_data/search_spiderman_movie.json')))
+            json.decode(readJson('dummy_data/search_lotr_series.json')))
         .results;
-    final tQuery = 'Spiderman';
+    final tQuery = 'The Lord of the Rings';
 
     test('should return list of movies when response code is 200', () async {
       // arrange
       when(mockDio.getUri(
               Uri.parse('$BASE_URL/search/tv?$API_KEY&query=$tQuery')))
           .thenAnswer((_) async => Response(
-              data: readJson('dummy_data/search_spiderman_movie.json'),
+              data: readJson('dummy_data/search_lotr_series.json'),
               statusCode: 200,
               requestOptions: mockOptions));
       // act

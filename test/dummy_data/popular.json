@@ -1,13 +1,9 @@
 {
-  "dates": {
-    "maximum": "2021-05-23",
-    "minimum": "2021-04-05"
-  },
   "page": 1,
   "results": [
     {
-      "adult": false,
-      "backdrop_path": "/path.jpg",
+      "backdrop_path": "/backdrop.jpg",
+      "first_air_date": "2022-06-06",
       "genre_ids": [
         1,
         2,
@@ -15,18 +11,17 @@
         4
       ],
       "id": 1,
+      "name": "Name",
+      "origin_country": ["Origin Country"],
       "original_language": "en",
-      "original_title": "Original Title",
+      "original_name": "Original Name",
       "overview": "Overview",
       "popularity": 1.0,
-      "poster_path": "/path.jpg",
-      "release_date": "2020-05-05",
-      "title": "Title",
-      "video": false,
+      "poster_path": "/poster.jpg",
       "vote_average": 1.0,
       "vote_count": 1
     }
   ],
-  "total_pages": 47,
-  "total_results": 940
+  "total_pages": 35137,
+  "total_results": 702739
 }

@@ -27,10 +27,10 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
   @override
   Future<List<MovieModel>> getNowPlayingMovies() async {
     final response =
-        await client.getUri(Uri.parse('$BASE_URL/tv/now_playing?$API_KEY'));
+        await client.getUri(Uri.parse('$BASE_URL/tv/on_the_air?$API_KEY'));
 
     if (response.statusCode == 200) {
-      return MovieResponse.fromJson(json.decode(response.data)).results;
+      return MovieResponse.fromJson(response.data).results;
     } else {
       throw ServerException();
     }
@@ -42,7 +42,7 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
         await client.getUri(Uri.parse('$BASE_URL/tv/$id?$API_KEY'));
 
     if (response.statusCode == 200) {
-      return MovieDetailResponse.fromJson(json.decode(response.data));
+      return MovieDetailResponse.fromJson(response.data);
     } else {
       throw ServerException();
     }
@@ -54,7 +54,7 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
         .getUri(Uri.parse('$BASE_URL/tv/$id/recommendations?$API_KEY'));
 
     if (response.statusCode == 200) {
-      return MovieResponse.fromJson(json.decode(response.data)).results;
+      return MovieResponse.fromJson(response.data).results;
     } else {
       throw ServerException();
     }
@@ -66,7 +66,7 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
         await client.getUri(Uri.parse('$BASE_URL/tv/popular?$API_KEY'));
 
     if (response.statusCode == 200) {
-      return MovieResponse.fromJson(json.decode(response.data)).results;
+      return MovieResponse.fromJson(response.data).results;
     } else {
       throw ServerException();
     }
@@ -78,7 +78,7 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
         await client.getUri(Uri.parse('$BASE_URL/tv/top_rated?$API_KEY'));
 
     if (response.statusCode == 200) {
-      return MovieResponse.fromJson(json.decode(response.data)).results;
+      return MovieResponse.fromJson(response.data).results;
     } else {
       throw ServerException();
     }
@@ -90,7 +90,7 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
         .getUri(Uri.parse('$BASE_URL/search/tv?$API_KEY&query=$query'));
 
     if (response.statusCode == 200) {
-      return MovieResponse.fromJson(json.decode(response.data)).results;
+      return MovieResponse.fromJson(response.data).results;
     } else {
       throw ServerException();
     }

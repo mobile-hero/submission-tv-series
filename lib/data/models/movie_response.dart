@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'movie_response.g.dart';
 
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
 class MovieResponse extends Equatable {
   final List<MovieModel> results;
 
