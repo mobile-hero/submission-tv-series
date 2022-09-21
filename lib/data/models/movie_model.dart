@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'movie_model.g.dart';
 
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
 class MovieModel extends Equatable {
   MovieModel({
     required this.backdropPath,

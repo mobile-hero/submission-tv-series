@@ -11,7 +11,7 @@ import 'season_model.dart';
 
 part 'movie_detail_model.g.dart';
 
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
 class MovieDetailResponse extends Equatable {
   MovieDetailResponse({
     required this.adult,

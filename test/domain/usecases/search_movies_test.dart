@@ -16,7 +16,7 @@ void main() {
   });
 
   final tMovies = <Movie>[];
-  final tQuery = 'Spiderman';
+  final tQuery = 'The Lord of the Rings';
 
   test('should get list of movies from the repository', () async {
     // arrange

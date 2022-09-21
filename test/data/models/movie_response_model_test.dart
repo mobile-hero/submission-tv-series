@@ -22,9 +22,8 @@ void main() {
     voteAverage: 1.0,
     voteCount: 1,
   );
-  final tMovieResponseModel =
-      MovieResponse(results: <MovieModel>[tMovieModel]);
-  group('fromJson', () {
+  final tMovieResponseModel = MovieResponse(results: <MovieModel>[tMovieModel]);
+  group('Movie fromJson', () {
     test('should return a valid model from JSON', () async {
       // arrange
       final Map<String, dynamic> jsonMap =
@@ -36,7 +35,7 @@ void main() {
     });
   });
 
-  group('toJson', () {
+  group('Movie toJson', () {
     test('should return a JSON map containing proper data', () async {
       // arrange
 

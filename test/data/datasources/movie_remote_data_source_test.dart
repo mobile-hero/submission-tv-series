@@ -33,7 +33,7 @@ void main() {
     test('should return list of Movie Model when the response code is 200',
         () async {
       // arrange
-      when(mockDio.getUri(Uri.parse('$BASE_URL/tv/now_playing?$API_KEY')))
+      when(mockDio.getUri(Uri.parse('$BASE_URL/tv/on_the_air?$API_KEY')))
           .thenAnswer((_) async => Response(
               data: readJson('dummy_data/now_playing.json'),
               statusCode: 200,
@@ -48,7 +48,7 @@ void main() {
         'should throw a ServerException when the response code is 404 or other',
         () async {
       // arrange
-      when(mockDio.getUri(Uri.parse('$BASE_URL/tv/now_playing?$API_KEY')))
+      when(mockDio.getUri(Uri.parse('$BASE_URL/tv/on_the_air?$API_KEY')))
           .thenAnswer((_) async => Response(
               data: 'Not Found', statusCode: 404, requestOptions: mockOptions));
       // act
