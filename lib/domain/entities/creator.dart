@@ -5,7 +5,7 @@ class Creator extends Equatable {
   final int id;
   final String creditId;
   final String name;
-  final String profilePath;
+  final String? profilePath;
 
   Creator({
     required this.id,

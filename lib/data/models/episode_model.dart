@@ -12,10 +12,10 @@ class EpisodeModel extends Equatable {
   final int id;
   final String name;
   final String overview;
-  final int runtime;
+  final int? runtime;
   final int seasonNumber;
   final int showId;
-  final String stillPath;
+  final String? stillPath;
   final double voteAverage;
   final int voteCount;
 

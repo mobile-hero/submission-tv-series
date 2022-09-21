@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:ditonton/common/exception.dart';
 import 'package:ditonton/data/datasources/movie_remote_data_source.dart';
@@ -26,9 +24,8 @@ void main() {
   });
 
   group('get Now Playing Movies', () {
-    final tMovieList = MovieResponse.fromJson(
-            json.decode(readJson('dummy_data/now_playing.json')))
-        .results;
+    final tMovieList =
+        MovieResponse.fromJson(readJson('dummy_data/now_playing.json')).results;
 
     test('should return list of Movie Model when the response code is 200',
         () async {
@@ -60,8 +57,7 @@ void main() {
 
   group('get Popular Movies', () {
     final tMovieList =
-        MovieResponse.fromJson(json.decode(readJson('dummy_data/popular.json')))
-            .results;
+        MovieResponse.fromJson(readJson('dummy_data/popular.json')).results;
 
     test('should return list of movies when response is success (200)',
         () async {
@@ -92,9 +88,8 @@ void main() {
   });
 
   group('get Top Rated Movies', () {
-    final tMovieList = MovieResponse.fromJson(
-            json.decode(readJson('dummy_data/top_rated.json')))
-        .results;
+    final tMovieList =
+        MovieResponse.fromJson(readJson('dummy_data/top_rated.json')).results;
 
     test('should return list of movies when response code is 200 ', () async {
       // arrange
@@ -124,13 +119,13 @@ void main() {
 
   group('get movie detail', () {
     final tId = 1;
-    final tMovieDetail = MovieDetailResponse.fromJson(
-        json.decode(readJson('dummy_data/movie_detail.json')));
+    final tMovieDetail =
+        MovieDetailResponse.fromJson(readJson('dummy_data/movie_detail.json'));
 
     test('should return movie detail when the response code is 200', () async {
       // arrange
-      when(mockDio.getUri(Uri.parse('$BASE_URL/tv/$tId?$API_KEY')))
-          .thenAnswer((_) async => Response(
+      when(mockDio.getUri(Uri.parse('$BASE_URL/tv/$tId?$API_KEY'))).thenAnswer(
+          (_) async => Response(
               data: readJson('dummy_data/movie_detail.json'),
               statusCode: 200,
               requestOptions: mockOptions));
@@ -143,8 +138,8 @@ void main() {
     test('should throw Server Exception when the response code is 404 or other',
         () async {
       // arrange
-      when(mockDio.getUri(Uri.parse('$BASE_URL/tv/$tId?$API_KEY')))
-          .thenAnswer((_) async => Response(
+      when(mockDio.getUri(Uri.parse('$BASE_URL/tv/$tId?$API_KEY'))).thenAnswer(
+          (_) async => Response(
               data: 'Not Found', statusCode: 404, requestOptions: mockOptions));
       // act
       final call = dataSource.getMovieDetail(tId);
@@ -155,15 +150,15 @@ void main() {
 
   group('get movie recommendations', () {
     final tMovieList = MovieResponse.fromJson(
-            json.decode(readJson('dummy_data/movie_recommendations.json')))
+            readJson('dummy_data/movie_recommendations.json'))
         .results;
     final tId = 1;
 
     test('should return list of Movie Model when the response code is 200',
         () async {
       // arrange
-      when(mockDio.getUri(
-              Uri.parse('$BASE_URL/tv/$tId/recommendations?$API_KEY')))
+      when(mockDio
+              .getUri(Uri.parse('$BASE_URL/tv/$tId/recommendations?$API_KEY')))
           .thenAnswer((_) async => Response(
               data: readJson('dummy_data/movie_recommendations.json'),
               statusCode: 200,
@@ -177,8 +172,8 @@ void main() {
     test('should throw Server Exception when the response code is 404 or other',
         () async {
       // arrange
-      when(mockDio.getUri(
-              Uri.parse('$BASE_URL/tv/$tId/recommendations?$API_KEY')))
+      when(mockDio
+              .getUri(Uri.parse('$BASE_URL/tv/$tId/recommendations?$API_KEY')))
           .thenAnswer((_) async => Response(
               data: 'Not Found', statusCode: 404, requestOptions: mockOptions));
       // act
@@ -189,15 +184,15 @@ void main() {
   });
 
   group('search movies', () {
-    final tSearchResult = MovieResponse.fromJson(
-            json.decode(readJson('dummy_data/search_lotr_series.json')))
-        .results;
+    final tSearchResult =
+        MovieResponse.fromJson(readJson('dummy_data/search_lotr_series.json'))
+            .results;
     final tQuery = 'The Lord of the Rings';
 
     test('should return list of movies when response code is 200', () async {
       // arrange
-      when(mockDio.getUri(
-              Uri.parse('$BASE_URL/search/tv?$API_KEY&query=$tQuery')))
+      when(mockDio
+              .getUri(Uri.parse('$BASE_URL/search/tv?$API_KEY&query=$tQuery')))
           .thenAnswer((_) async => Response(
               data: readJson('dummy_data/search_lotr_series.json'),
               statusCode: 200,
@@ -211,8 +206,8 @@ void main() {
     test('should throw ServerException when response code is other than 200',
         () async {
       // arrange
-      when(mockDio.getUri(
-              Uri.parse('$BASE_URL/search/tv?$API_KEY&query=$tQuery')))
+      when(mockDio
+              .getUri(Uri.parse('$BASE_URL/search/tv?$API_KEY&query=$tQuery')))
           .thenAnswer((_) async => Response(
               data: 'Not Found', statusCode: 404, requestOptions: mockOptions));
       // act
