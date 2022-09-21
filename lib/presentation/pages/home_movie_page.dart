@@ -10,6 +10,7 @@ import 'package:ditonton/presentation/pages/top_rated_movies_page.dart';
 import 'package:ditonton/presentation/pages/watchlist_movies_page.dart';
 import 'package:ditonton/presentation/provider/movie_list_notifier.dart';
 import 'package:ditonton/common/state_enum.dart';
+import 'package:ditonton/presentation/widgets/my_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -90,9 +91,7 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
               Consumer<MovieListNotifier>(builder: (context, data, child) {
                 final state = data.nowPlayingState;
                 if (state == RequestState.Loading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
+                  return MyProgressIndicator();
                 } else if (state == RequestState.Loaded) {
                   return MovieList(data.nowPlayingMovies);
                 } else {
@@ -107,9 +106,7 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
               Consumer<MovieListNotifier>(builder: (context, data, child) {
                 final state = data.popularMoviesState;
                 if (state == RequestState.Loading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
+                  return MyProgressIndicator();
                 } else if (state == RequestState.Loaded) {
                   return MovieList(data.popularMovies);
                 } else {
@@ -124,9 +121,7 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
               Consumer<MovieListNotifier>(builder: (context, data, child) {
                 final state = data.topRatedMoviesState;
                 if (state == RequestState.Loading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
+                  return MyProgressIndicator();
                 } else if (state == RequestState.Loaded) {
                   return MovieList(data.topRatedMovies);
                 } else {
@@ -189,9 +184,7 @@ class MovieList extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(16)),
                 child: CachedNetworkImage(
                   imageUrl: movie.posterPath.imageUrl,
-                  placeholder: (context, url) => Center(
-                    child: CircularProgressIndicator(),
-                  ),
+                  placeholder: (context, url) => MyProgressIndicator(),
                   errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
               ),
