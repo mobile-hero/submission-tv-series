@@ -3,6 +3,7 @@ import 'package:ditonton/domain/entities/movie.dart';
 import 'package:ditonton/domain/usecases/get_movie_detail.dart';
 import 'package:ditonton/domain/usecases/get_movie_recommendations.dart';
 import 'package:ditonton/common/failure.dart';
+import 'package:ditonton/domain/usecases/get_season_episodes.dart';
 import 'package:ditonton/domain/usecases/get_watchlist_status.dart';
 import 'package:ditonton/domain/usecases/remove_watchlist.dart';
 import 'package:ditonton/domain/usecases/save_watchlist.dart';
@@ -21,6 +22,7 @@ import 'movie_detail_notifier_test.mocks.dart';
   GetWatchListStatus,
   SaveWatchlist,
   RemoveWatchlist,
+  GetSeasonEpisodes,
 ])
 void main() {
   late MovieDetailNotifier provider;
@@ -29,6 +31,7 @@ void main() {
   late MockGetWatchListStatus mockGetWatchlistStatus;
   late MockSaveWatchlist mockSaveWatchlist;
   late MockRemoveWatchlist mockRemoveWatchlist;
+  late MockGetSeasonEpisodes mockGetSeasonEpisodes;
   late int listenerCallCount;
 
   setUp(() {
@@ -38,12 +41,14 @@ void main() {
     mockGetWatchlistStatus = MockGetWatchListStatus();
     mockSaveWatchlist = MockSaveWatchlist();
     mockRemoveWatchlist = MockRemoveWatchlist();
+    mockGetSeasonEpisodes = MockGetSeasonEpisodes();
     provider = MovieDetailNotifier(
       getMovieDetail: mockGetMovieDetail,
       getMovieRecommendations: mockGetMovieRecommendations,
       getWatchListStatus: mockGetWatchlistStatus,
       saveWatchlist: mockSaveWatchlist,
       removeWatchlist: mockRemoveWatchlist,
+      getSeasonEpisodes: mockGetSeasonEpisodes,
     )..addListener(() {
         listenerCallCount += 1;
       });

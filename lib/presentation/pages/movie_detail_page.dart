@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/common/state_enum.dart';
+import 'package:ditonton/domain/entities/episode.dart';
 import 'package:ditonton/domain/entities/genre.dart';
 import 'package:ditonton/domain/entities/movie.dart';
 import 'package:ditonton/domain/entities/movie_detail.dart';
@@ -10,6 +11,8 @@ import 'package:ditonton/presentation/widgets/season_horizontal_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
+
+import '../widgets/episode_horizontal_list.dart';
 
 class MovieDetailPage extends StatefulWidget {
   static const ROUTE_NAME = '/detail';
@@ -48,6 +51,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
             return SafeArea(
               child: DetailContent(
                 movie,
+                provider.seasonEpisodes,
                 provider.movieRecommendations,
                 provider.isAddedToWatchlist,
               ),
@@ -63,10 +67,16 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
 
 class DetailContent extends StatelessWidget {
   final MovieDetail movie;
+  final List<Episode> episodes;
   final List<Movie> recommendations;
   final bool isAddedWatchlist;
 
-  DetailContent(this.movie, this.recommendations, this.isAddedWatchlist);
+  DetailContent(
+    this.movie,
+    this.episodes,
+    this.recommendations,
+    this.isAddedWatchlist,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -187,6 +197,8 @@ class DetailContent extends StatelessWidget {
                             Text(
                               movie.overview,
                             ),
+                            const SizedBox(height: 16),
+                            EpisodeHorizontalList(seasons: episodes),
                             const SizedBox(height: 16),
                             SeasonHorizontalList(seasons: movie.seasons),
                             const SizedBox(height: 16),

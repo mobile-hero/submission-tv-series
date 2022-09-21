@@ -8,6 +8,7 @@ import 'package:ditonton/domain/usecases/get_movie_detail.dart';
 import 'package:ditonton/domain/usecases/get_movie_recommendations.dart';
 import 'package:ditonton/domain/usecases/get_now_playing_movies.dart';
 import 'package:ditonton/domain/usecases/get_popular_movies.dart';
+import 'package:ditonton/domain/usecases/get_season_episodes.dart';
 import 'package:ditonton/domain/usecases/get_top_rated_movies.dart';
 import 'package:ditonton/domain/usecases/get_watchlist_movies.dart';
 import 'package:ditonton/domain/usecases/get_watchlist_status.dart';
@@ -42,6 +43,7 @@ void init() {
       getWatchListStatus: locator(),
       saveWatchlist: locator(),
       removeWatchlist: locator(),
+      getSeasonEpisodes: locator(),
     ),
   );
   locator.registerFactory(
@@ -72,6 +74,7 @@ void init() {
   locator.registerLazySingleton(() => GetMovieDetail(locator()));
   locator.registerLazySingleton(() => GetMovieRecommendations(locator()));
   locator.registerLazySingleton(() => SearchMovies(locator()));
+  locator.registerLazySingleton(() => GetSeasonEpisodes(locator()));
   locator.registerLazySingleton(() => GetWatchListStatus(locator()));
   locator.registerLazySingleton(() => SaveWatchlist(locator()));
   locator.registerLazySingleton(() => RemoveWatchlist(locator()));

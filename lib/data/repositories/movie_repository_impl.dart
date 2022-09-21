@@ -97,7 +97,7 @@ class MovieRepositoryImpl implements MovieRepository {
   Future<Either<Failure, List<Episode>>> getSeasonEpisodes(
       int tvId, int seasonNumber) async {
     try {
-      final result = await remoteDataSource.getSeasonEpisodes(tvId, tvId);
+      final result = await remoteDataSource.getSeasonEpisodes(tvId, seasonNumber);
       return Right(result.map((model) => model.toEntity()).toList());
     } on ServerException {
       return Left(ServerFailure(''));
