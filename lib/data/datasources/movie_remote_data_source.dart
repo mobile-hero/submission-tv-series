@@ -1,19 +1,26 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
-import 'package:ditonton/data/models/movie_detail_model.dart';
-import 'package:ditonton/data/models/movie_model.dart';
-import 'package:ditonton/data/models/movie_response.dart';
-import 'package:ditonton/common/exception.dart';
-import 'package:http/http.dart' as http;
+import 'package:ditonton/data/models/season_episodes_model.dart';
+
+import '../../common/exception.dart';
+import '../models/episode_model.dart';
+import '../models/movie_detail_model.dart';
+import '../models/movie_model.dart';
+import '../models/movie_response.dart';
 
 abstract class MovieRemoteDataSource {
   Future<List<MovieModel>> getNowPlayingMovies();
+
   Future<List<MovieModel>> getPopularMovies();
+
   Future<List<MovieModel>> getTopRatedMovies();
+
   Future<MovieDetailResponse> getMovieDetail(int id);
+
   Future<List<MovieModel>> getMovieRecommendations(int id);
+
   Future<List<MovieModel>> searchMovies(String query);
+
+  Future<List<EpisodeModel>> getSeasonEpisodes(int tvId, int seasonNumber);
 }
 
 class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
@@ -91,6 +98,18 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
 
     if (response.statusCode == 200) {
       return MovieResponse.fromJson(response.data).results;
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<List<EpisodeModel>> getSeasonEpisodes(int tvId, int seasonNumber) async {
+    final response = await client
+        .getUri(Uri.parse('$BASE_URL/tv/$tvId/season/$seasonNumber?$API_KEY'));
+
+    if (response.statusCode == 200) {
+      return SeasonEpisodesModel.fromJson(response.data).episodes;
     } else {
       throw ServerException();
     }

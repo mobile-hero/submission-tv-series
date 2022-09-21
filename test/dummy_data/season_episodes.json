@@ -1,0 +1,23 @@
+{
+  "air_date": "airDate",
+  "id": 1,
+  "name": "name",
+  "overview": "overview",
+  "poster_path": "posterPath",
+  "season_number": 1,
+  "episodes": [
+    {
+      "air_date": "airDate",
+      "episode_number": 1,
+      "id": 1,
+      "name": "name",
+      "overview": "overview",
+      "runtime": 1,
+      "season_number": 1,
+      "show_id": 1,
+      "still_path": "stillPath",
+      "vote_average": 1.0,
+      "vote_count": 1
+    }
+  ]
+}

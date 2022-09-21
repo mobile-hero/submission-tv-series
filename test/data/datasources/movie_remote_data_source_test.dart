@@ -3,6 +3,7 @@ import 'package:ditonton/common/exception.dart';
 import 'package:ditonton/data/datasources/movie_remote_data_source.dart';
 import 'package:ditonton/data/models/movie_detail_model.dart';
 import 'package:ditonton/data/models/movie_response.dart';
+import 'package:ditonton/data/models/season_episodes_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
@@ -212,6 +213,41 @@ void main() {
               data: 'Not Found', statusCode: 404, requestOptions: mockOptions));
       // act
       final call = dataSource.searchMovies(tQuery);
+      // assert
+      expect(() => call, throwsA(isA<ServerException>()));
+    });
+  });
+
+  group('get season episodes', () {
+    final tEpisodesResult = SeasonEpisodesModel.fromJson(
+            readJson('dummy_data/season_episodes.json'))
+        .episodes;
+    final tvId = 1;
+    final seasonNumber = 1;
+
+    test('should return list of episodes when response code is 200', () async {
+      // arrange
+      when(mockDio.getUri(
+              Uri.parse('$BASE_URL/tv/$tvId/season/$seasonNumber?$API_KEY')))
+          .thenAnswer((_) async => Response(
+              data: readJson('dummy_data/season_episodes.json'),
+              statusCode: 200,
+              requestOptions: mockOptions));
+      // act
+      final result = await dataSource.getSeasonEpisodes(tvId, seasonNumber);
+      // assert
+      expect(result, tEpisodesResult);
+    });
+
+    test('should throw ServerException when response code is other than 200',
+        () async {
+      // arrange
+      when(mockDio.getUri(
+              Uri.parse('$BASE_URL/tv/$tvId/season/$seasonNumber?$API_KEY')))
+          .thenAnswer((_) async => Response(
+              data: 'Not Found', statusCode: 404, requestOptions: mockOptions));
+      // act
+      final call = dataSource.getSeasonEpisodes(tvId, seasonNumber);
       // assert
       expect(() => call, throwsA(isA<ServerException>()));
     });
