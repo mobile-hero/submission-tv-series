@@ -1,3 +1,4 @@
+import 'package:ditonton/injection.dart' as di;
 import 'package:ditonton/presentation/widgets/episode_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,41 +28,41 @@ class _MovieEpisodesPageState extends State<MovieEpisodesPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() {
-      Provider.of<MovieEpisodesNotifier>(context, listen: false)
-          .fetchSeasonEpisodes(widget.movieId, widget.seasonNumber);
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Episodes from ${widget.seasonName}'),
-      ),
-      body: Consumer<MovieEpisodesNotifier>(
-        builder: (context, provider, child) {
-          if (provider.seasonState == RequestState.Loading) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (provider.seasonState == RequestState.Loaded) {
-            return SafeArea(
-              child: ListView.builder(
-                itemCount: provider.seasonEpisodes.length,
-                itemBuilder: (context, position) {
-                  final item = provider.seasonEpisodes[position];
-                  return EpisodeCard(
-                    key: ValueKey(item.episodeNumber),
-                    episode: item,
-                  );
-                },
-              ),
-            );
-          } else {
-            return Text(provider.message);
-          }
-        },
+    return ChangeNotifierProvider(
+      create: (_) => di.locator<MovieEpisodesNotifier>()
+        ..fetchSeasonEpisodes(widget.movieId, widget.seasonNumber),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Episodes from ${widget.seasonName}'),
+        ),
+        body: Consumer<MovieEpisodesNotifier>(
+          builder: (context, provider, child) {
+            if (provider.seasonState == RequestState.Loading) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (provider.seasonState == RequestState.Loaded) {
+              return SafeArea(
+                child: ListView.builder(
+                  itemCount: provider.seasonEpisodes.length,
+                  itemBuilder: (context, position) {
+                    final item = provider.seasonEpisodes[position];
+                    return EpisodeCard(
+                      key: ValueKey(item.episodeNumber),
+                      episode: item,
+                    );
+                  },
+                ),
+              );
+            } else {
+              return Text(provider.message);
+            }
+          },
+        ),
       ),
     );
   }

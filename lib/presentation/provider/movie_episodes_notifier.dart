@@ -32,9 +32,9 @@ class MovieEpisodesNotifier extends ChangeNotifier {
   String get message => _message;
 
   Future<void> fetchSeasonEpisodes(int id, int seasonNumber) async {
-    final episodesResult = await getSeasonEpisodes.execute(id, seasonNumber);
     _seasonState = RequestState.Loading;
     notifyListeners();
+    final episodesResult = await getSeasonEpisodes.execute(id, seasonNumber);
     episodesResult.fold(
       (failure) {
         _seasonState = RequestState.Error;

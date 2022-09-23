@@ -13,17 +13,18 @@ class EpisodeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Column(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      margin: const EdgeInsets.only(bottom: 16),
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            margin: const EdgeInsets.only(right: 16),
-            constraints: BoxConstraints(minWidth: 200, minHeight: 150),
+          ConstrainedBox(
+            constraints: BoxConstraints(minHeight: 40),
             child: ClipRRect(
               child: CachedNetworkImage(
                 imageUrl: episode.stillPath.imageUrl,
-                height: 150,
+                width: 120,
                 placeholder: (context, url) => Container(
                   color: Colors.white,
                   child: MyProgressIndicator(),
@@ -39,9 +40,26 @@ class EpisodeCard extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(8)),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 8.0, right: 16.0),
-            child: Text(episode.name),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Text(
+                      episode.name,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Text(episode.overview),
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),
