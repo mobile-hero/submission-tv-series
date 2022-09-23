@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/domain/entities/episode.dart';
 import 'package:ditonton/domain/entities/genre.dart';
 import 'package:ditonton/domain/entities/movie.dart';
 import 'package:ditonton/domain/entities/movie_detail.dart';
@@ -12,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 
-import '../widgets/episode_horizontal_list.dart';
+import 'movie_episodes_page.dart';
 
 class MovieDetailPage extends StatefulWidget {
   static const ROUTE_NAME = '/detail';
@@ -51,7 +50,6 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
             return SafeArea(
               child: DetailContent(
                 movie,
-                provider.seasonEpisodes,
                 provider.movieRecommendations,
                 provider.isAddedToWatchlist,
               ),
@@ -67,13 +65,11 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
 
 class DetailContent extends StatelessWidget {
   final MovieDetail movie;
-  final List<Episode> episodes;
   final List<Movie> recommendations;
   final bool isAddedWatchlist;
 
   DetailContent(
     this.movie,
-    this.episodes,
     this.recommendations,
     this.isAddedWatchlist,
   );
@@ -198,9 +194,20 @@ class DetailContent extends StatelessWidget {
                               movie.overview,
                             ),
                             const SizedBox(height: 16),
-                            EpisodeHorizontalList(seasons: episodes),
-                            const SizedBox(height: 16),
-                            SeasonHorizontalList(seasons: movie.seasons),
+                            SeasonHorizontalList(
+                              seasons: movie.seasons,
+                              onTap: (int seasonNumber, String seasonName) {
+                                Navigator.pushNamed(
+                                  context,
+                                  MovieEpisodesPage.ROUTE_NAME,
+                                  arguments: {
+                                    "id": movie.id,
+                                    "seasonNumber": seasonNumber,
+                                    "seasonName": seasonName,
+                                  },
+                                );
+                              },
+                            ),
                             const SizedBox(height: 16),
                             RecommendationHorizontalList(
                                 recommendations: recommendations),

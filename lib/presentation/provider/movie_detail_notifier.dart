@@ -21,7 +21,6 @@ class MovieDetailNotifier extends ChangeNotifier {
   final GetWatchListStatus getWatchListStatus;
   final SaveWatchlist saveWatchlist;
   final RemoveWatchlist removeWatchlist;
-  final GetSeasonEpisodes getSeasonEpisodes;
 
   MovieDetailNotifier({
     required this.getMovieDetail,
@@ -29,7 +28,6 @@ class MovieDetailNotifier extends ChangeNotifier {
     required this.getWatchListStatus,
     required this.saveWatchlist,
     required this.removeWatchlist,
-    required this.getSeasonEpisodes,
   });
 
   late MovieDetail _movie;
@@ -47,14 +45,6 @@ class MovieDetailNotifier extends ChangeNotifier {
   RequestState _recommendationState = RequestState.Empty;
 
   RequestState get recommendationState => _recommendationState;
-
-  List<Episode> _seasonEpisodes = [];
-
-  List<Episode> get seasonEpisodes => _seasonEpisodes;
-
-  RequestState _seasonState = RequestState.Empty;
-
-  RequestState get seasonState => _seasonState;
 
   String _message = '';
 
@@ -75,7 +65,7 @@ class MovieDetailNotifier extends ChangeNotifier {
         _message = failure.message;
         notifyListeners();
       },
-      (movie) async {
+      (movie) {
         _movie = movie;
 
         _recommendationState = RequestState.Loading;
@@ -88,23 +78,6 @@ class MovieDetailNotifier extends ChangeNotifier {
           (movies) {
             _recommendationState = RequestState.Loaded;
             _movieRecommendations = movies;
-          },
-        );
-
-        _seasonState = RequestState.Loading;
-        notifyListeners();
-
-        print(movie.lastEpisodeToAir?.seasonNumber);
-        final episodesResult = await getSeasonEpisodes.execute(
-            movie.id, movie.lastEpisodeToAir?.seasonNumber ?? 1);
-        episodesResult.fold(
-          (failure) {
-            _seasonState = RequestState.Error;
-            _message = failure.message;
-          },
-          (episodes) {
-            _seasonState = RequestState.Loaded;
-            _seasonEpisodes = episodes;
           },
         );
 

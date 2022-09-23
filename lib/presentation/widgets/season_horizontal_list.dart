@@ -6,9 +6,13 @@ import '../../domain/entities/season.dart';
 
 class SeasonHorizontalList extends StatelessWidget {
   final List<Season> seasons;
+  final Function(int seasonNumber, String seasonName) onTap;
 
-  const SeasonHorizontalList({Key? key, required this.seasons})
-      : super(key: key);
+  const SeasonHorizontalList({
+    Key? key,
+    required this.seasons,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +33,10 @@ class SeasonHorizontalList extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 final season = seasons[index];
-                return SeasonCard(season: season);
+                return SeasonCard(
+                  season: season,
+                  onTap: onTap,
+                );
               },
               itemCount: seasons.length,
             ),

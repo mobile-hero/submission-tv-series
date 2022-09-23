@@ -29,7 +29,7 @@ class EpisodeHorizontalList extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 final season = seasons[index];
-                return EpisodeCard(season: season);
+                return EpisodeCard(episode: season);
               },
               itemCount: seasons.length,
             ),

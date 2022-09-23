@@ -6,9 +6,9 @@ import '../../domain/entities/episode.dart';
 import 'my_progress_indicator.dart';
 
 class EpisodeCard extends StatelessWidget {
-  final Episode season;
+  final Episode episode;
 
-  const EpisodeCard({Key? key, required this.season}) : super(key: key);
+  const EpisodeCard({Key? key, required this.episode}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class EpisodeCard extends StatelessWidget {
             constraints: BoxConstraints(minWidth: 200, minHeight: 150),
             child: ClipRRect(
               child: CachedNetworkImage(
-                imageUrl: season.stillPath.imageUrl,
+                imageUrl: episode.stillPath.imageUrl,
                 height: 150,
                 placeholder: (context, url) => Container(
                   color: Colors.white,
@@ -41,7 +41,7 @@ class EpisodeCard extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8.0, right: 16.0),
-            child: Text(season.name),
+            child: Text(episode.name),
           ),
         ],
       ),
