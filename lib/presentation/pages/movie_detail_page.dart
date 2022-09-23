@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 
+import '../widgets/error_message_container.dart';
+import '../widgets/my_progress_indicator.dart';
 import 'movie_episodes_page.dart';
 
 class MovieDetailPage extends StatefulWidget {
@@ -42,9 +44,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
       body: Consumer<MovieDetailNotifier>(
         builder: (context, provider, child) {
           if (provider.movieState == RequestState.Loading) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
+            return MyProgressIndicator();
           } else if (provider.movieState == RequestState.Loaded) {
             final movie = provider.movie;
             return SafeArea(
@@ -55,7 +55,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
               ),
             );
           } else {
-            return Text(provider.message);
+            return ErrorMessageContainer(message: provider.message);
           }
         },
       ),

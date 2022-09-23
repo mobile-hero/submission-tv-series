@@ -2,6 +2,7 @@ import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/domain/entities/episode.dart';
 import 'package:ditonton/presentation/pages/movie_episodes_page.dart';
 import 'package:ditonton/presentation/provider/movie_episodes_notifier.dart';
+import 'package:ditonton/presentation/widgets/my_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
@@ -57,5 +58,35 @@ void main() {
     )));
 
     expect(episodeCard, findsOneWidget);
+  });
+
+  testWidgets('Page should display MyProgressIndicator when Loading',
+      (tester) async {
+    when(mockNotifier.seasonState).thenReturn(RequestState.Loading);
+    when(mockNotifier.seasonEpisodes).thenReturn(<Episode>[]);
+
+    await tester.pumpWidget(_makeTestableWidget(MovieEpisodesPage(
+      movieId: 1,
+      seasonName: 'seasonName',
+      seasonNumber: 1,
+    )));
+
+    expect(find.byType(MyProgressIndicator), findsOneWidget);
+  });
+
+  testWidgets('Page should display text with message when Error',
+      (WidgetTester tester) async {
+    when(mockNotifier.seasonState).thenReturn(RequestState.Error);
+    when(mockNotifier.message).thenReturn('Error message');
+
+    final textFinder = find.byKey(Key('error_message'));
+
+    await tester.pumpWidget(_makeTestableWidget(MovieEpisodesPage(
+      movieId: 1,
+      seasonName: 'seasonName',
+      seasonNumber: 1,
+    )));
+
+    expect(textFinder, findsOneWidget);
   });
 }
