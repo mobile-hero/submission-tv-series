@@ -1,12 +1,12 @@
-import 'package:ditonton/data/models/movie_table.dart';
+import 'package:ditonton/data/models/tv_table.dart';
 import 'package:ditonton/domain/entities/creator.dart';
 import 'package:ditonton/domain/entities/episode.dart';
 import 'package:ditonton/domain/entities/genre.dart';
-import 'package:ditonton/domain/entities/movie.dart';
-import 'package:ditonton/domain/entities/movie_detail.dart';
+import 'package:ditonton/domain/entities/tv_series.dart';
+import 'package:ditonton/domain/entities/tv_detail.dart';
 import 'package:ditonton/domain/entities/season.dart';
 
-final testMovie = Movie(
+final testTv = TvSeries(
   backdropPath: '/pdfCr8W0wBCpdjbZXSxnKhZtosP.jpg',
   firstAirDate: '2022-09-01',
   genreIds: [10765, 10759, 18],
@@ -23,9 +23,9 @@ final testMovie = Movie(
   voteCount: 619,
 );
 
-final testMovieList = [testMovie];
+final testTvList = [testTv];
 
-final testMovieDetail = MovieDetail(
+final testTvDetail = TvDetail(
   adult: false,
   backdropPath: 'backdropPath',
   createdBy: [
@@ -93,21 +93,21 @@ final testMovieDetail = MovieDetail(
   voteCount: 1,
 );
 
-final testWatchlistMovie = Movie.watchlist(
+final testWatchlistTv = TvSeries.watchlist(
   id: 1,
   name: 'name',
   posterPath: 'posterPath',
   overview: 'overview',
 );
 
-final testMovieTable = MovieTable(
+final testTvTable = TvTable(
   id: 1,
   name: 'name',
   posterPath: 'posterPath',
   overview: 'overview',
 );
 
-final testMovieMap = {
+final testTvMap = {
   'id': 1,
   'name': 'name',
   'overview': 'overview',

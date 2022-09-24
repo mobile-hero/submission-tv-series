@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ditonton/domain/entities/movie.dart';
+import 'package:ditonton/domain/entities/tv_series.dart';
 import 'package:flutter/material.dart';
 
-import '../pages/movie_detail_page.dart';
+import '../pages/tv_detail_page.dart';
 
 class RecommendationCard extends StatelessWidget {
-  final Movie movie;
+  final TvSeries movie;
 
   const RecommendationCard({
     Key? key,
@@ -20,7 +20,7 @@ class RecommendationCard extends StatelessWidget {
         onTap: () {
           Navigator.pushReplacementNamed(
             context,
-            MovieDetailPage.ROUTE_NAME,
+            TvDetailPage.ROUTE_NAME,
             arguments: movie.id,
           );
         },

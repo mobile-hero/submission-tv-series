@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:ditonton/data/models/episode_model.dart';
 import 'package:ditonton/data/models/genre_model.dart';
-import 'package:ditonton/data/models/movie_model.dart';
-import 'package:ditonton/data/models/movie_response.dart';
+import 'package:ditonton/data/models/tv_model.dart';
+import 'package:ditonton/data/models/tv_response.dart';
 import 'package:ditonton/domain/entities/episode.dart';
 import 'package:flutter_test/flutter_test.dart';
 

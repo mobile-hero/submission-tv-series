@@ -4,11 +4,11 @@ import 'package:provider/provider.dart';
 
 import '../../common/constants.dart';
 import '../../common/state_enum.dart';
-import '../../domain/entities/movie.dart';
-import '../provider/movie_detail_notifier.dart';
+import '../../domain/entities/tv_series.dart';
+import '../provider/tv_detail_notifier.dart';
 
 class RecommendationHorizontalList extends StatelessWidget {
-  final List<Movie> recommendations;
+  final List<TvSeries> recommendations;
 
   const RecommendationHorizontalList({
     Key? key,
@@ -28,7 +28,7 @@ class RecommendationHorizontalList extends StatelessWidget {
               style: kHeading6,
             ),
           ),
-          Consumer<MovieDetailNotifier>(
+          Consumer<TvDetailNotifier>(
             builder: (context, data, child) {
               if (data.recommendationState == RequestState.Loading) {
                 return Center(
