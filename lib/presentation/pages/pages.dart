@@ -1,0 +1,13 @@
+export 'about_page.dart';
+export 'home_movie_page.dart';
+export 'movie_detail_page.dart';
+export 'popular_movies_page.dart';
+export 'popular_tv_page.dart';
+export 'search_page.dart';
+export 'top_rated_movies_page.dart';
+export 'top_rated_tv_page.dart';
+export 'tv_detail_page.dart';
+export 'tv_episodes_page.dart';
+export 'tv_search_page.dart';
+export 'watchlist_movies_page.dart';
+export 'watchlist_tvs_page.dart';

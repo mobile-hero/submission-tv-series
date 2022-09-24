@@ -1,25 +1,26 @@
 import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/common/utils.dart';
-import 'package:ditonton/presentation/provider/watchlist_tv_notifier.dart';
 import 'package:ditonton/presentation/widgets/movie_card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class WatchlistTvsPage extends StatefulWidget {
+import '../provider/watchlist_movie_notifier.dart';
+
+class WatchlistMoviesPage extends StatefulWidget {
   static const ROUTE_NAME = '/watchlist-movie';
 
   @override
-  _WatchlistTvsPageState createState() => _WatchlistTvsPageState();
+  _WatchlistMoviesPageState createState() => _WatchlistMoviesPageState();
 }
 
-class _WatchlistTvsPageState extends State<WatchlistTvsPage>
+class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
     with RouteAware {
   @override
   void initState() {
     super.initState();
     Future.microtask(() =>
-        Provider.of<WatchlistTvNotifier>(context, listen: false)
-            .fetchWatchlistTvs());
+        Provider.of<WatchlistMovieNotifier>(context, listen: false)
+            .fetchWatchlistMovies());
   }
 
   @override
@@ -29,8 +30,8 @@ class _WatchlistTvsPageState extends State<WatchlistTvsPage>
   }
 
   void didPopNext() {
-    Provider.of<WatchlistTvNotifier>(context, listen: false)
-        .fetchWatchlistTvs();
+    Provider.of<WatchlistMovieNotifier>(context, listen: false)
+        .fetchWatchlistMovies();
   }
 
   @override
@@ -41,7 +42,7 @@ class _WatchlistTvsPageState extends State<WatchlistTvsPage>
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<WatchlistTvNotifier>(
+        child: Consumer<WatchlistMovieNotifier>(
           builder: (context, data, child) {
             if (data.watchlistState == RequestState.Loading) {
               return Center(
@@ -50,10 +51,10 @@ class _WatchlistTvsPageState extends State<WatchlistTvsPage>
             } else if (data.watchlistState == RequestState.Loaded) {
               return ListView.builder(
                 itemBuilder: (context, index) {
-                  final movie = data.watchlistTvs[index];
-                  return TvCard(movie);
+                  final movie = data.watchlistMovies[index];
+                  return MovieCard(movie);
                 },
-                itemCount: data.watchlistTvs.length,
+                itemCount: data.watchlistMovies.length,
               );
             } else {
               return Center(

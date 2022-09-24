@@ -3,10 +3,10 @@ import 'package:ditonton/common/failure.dart';
 import 'package:ditonton/domain/entities/tv_detail.dart';
 import 'package:ditonton/domain/repositories/tv_repository.dart';
 
-class SaveWatchlist {
+class TvSaveWatchlist {
   final TvRepository repository;
 
-  SaveWatchlist(this.repository);
+  TvSaveWatchlist(this.repository);
 
   Future<Either<Failure, String>> execute(TvDetail movie) {
     return repository.saveWatchlist(movie);

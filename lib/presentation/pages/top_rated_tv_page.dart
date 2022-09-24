@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import '../widgets/widgets.dart';
 
 class TopRatedTvsPage extends StatefulWidget {
-  static const ROUTE_NAME = '/top-rated-movie';
+  static const ROUTE_NAME = '/top-rated-tv';
 
   @override
   _TopRatedTvsPageState createState() => _TopRatedTvsPageState();

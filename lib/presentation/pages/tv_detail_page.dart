@@ -16,7 +16,7 @@ import '../widgets/my_progress_indicator.dart';
 import 'tv_episodes_page.dart';
 
 class TvDetailPage extends StatefulWidget {
-  static const ROUTE_NAME = '/detail';
+  static const ROUTE_NAME = '/detail-tv';
 
   final int id;
 
@@ -48,7 +48,7 @@ class _TvDetailPageState extends State<TvDetailPage> {
           } else if (provider.movieState == RequestState.Loaded) {
             final movie = provider.movie;
             return SafeArea(
-              child: DetailContent(
+              child: _DetailContent(
                 movie,
                 provider.movieRecommendations,
                 provider.isAddedToWatchlist,
@@ -63,12 +63,12 @@ class _TvDetailPageState extends State<TvDetailPage> {
   }
 }
 
-class DetailContent extends StatelessWidget {
+class _DetailContent extends StatelessWidget {
   final TvDetail movie;
   final List<TvSeries> recommendations;
   final bool isAddedWatchlist;
 
-  DetailContent(
+  _DetailContent(
     this.movie,
     this.recommendations,
     this.isAddedWatchlist,

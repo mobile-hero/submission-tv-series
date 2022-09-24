@@ -7,6 +7,7 @@ import 'package:ditonton/domain/usecases/get_tv_detail.dart';
 import 'package:ditonton/domain/usecases/get_tv_recommendations.dart';
 import 'package:ditonton/domain/usecases/get_season_episodes.dart';
 import 'package:ditonton/domain/usecases/get_watchlist_status.dart';
+import 'package:ditonton/domain/usecases/get_watchlist_tv_status.dart';
 import 'package:ditonton/domain/usecases/tv_remove_watchlist.dart';
 import 'package:ditonton/domain/usecases/tv_save_watchlist.dart';
 import 'package:ditonton/presentation/provider/tv_detail_notifier.dart';
@@ -14,32 +15,32 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import '../../dummy_data/dummy_objects.dart';
+import '../../dummy_data/dummy_objects_tv.dart';
 import 'tv_detail_notifier_test.mocks.dart';
 
 @GenerateMocks([
   GetTvDetail,
   GetTvRecommendations,
-  GetWatchListStatus,
-  SaveWatchlist,
-  RemoveWatchlist,
+  GetWatchListTvStatus,
+  TvSaveWatchlist,
+  TvRemoveWatchlist,
 ])
 void main() {
   late TvDetailNotifier provider;
   late MockGetTvDetail mockGetTvDetail;
   late MockGetTvRecommendations mockGetTvRecommendations;
-  late MockGetWatchListStatus mockGetWatchlistStatus;
-  late MockSaveWatchlist mockSaveWatchlist;
-  late MockRemoveWatchlist mockRemoveWatchlist;
+  late MockGetWatchListTvStatus mockGetWatchlistStatus;
+  late MockTvSaveWatchlist mockSaveWatchlist;
+  late MockTvRemoveWatchlist mockRemoveWatchlist;
   late int listenerCallCount;
 
   setUp(() {
     listenerCallCount = 0;
     mockGetTvDetail = MockGetTvDetail();
     mockGetTvRecommendations = MockGetTvRecommendations();
-    mockGetWatchlistStatus = MockGetWatchListStatus();
-    mockSaveWatchlist = MockSaveWatchlist();
-    mockRemoveWatchlist = MockRemoveWatchlist();
+    mockGetWatchlistStatus = MockGetWatchListTvStatus();
+    mockSaveWatchlist = MockTvSaveWatchlist();
+    mockRemoveWatchlist = MockTvRemoveWatchlist();
     provider = TvDetailNotifier(
       getTvDetail: mockGetTvDetail,
       getTvRecommendations: mockGetTvRecommendations,

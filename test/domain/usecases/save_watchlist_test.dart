@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:ditonton/domain/usecases/tv_save_watchlist.dart';
+import 'package:ditonton/domain/usecases/save_watchlist.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
@@ -8,21 +8,21 @@ import '../../helpers/test_helper.mocks.dart';
 
 void main() {
   late SaveWatchlist usecase;
-  late MockTvRepository mockTvRepository;
+  late MockMovieRepository mockMovieRepository;
 
   setUp(() {
-    mockTvRepository = MockTvRepository();
-    usecase = SaveWatchlist(mockTvRepository);
+    mockMovieRepository = MockMovieRepository();
+    usecase = SaveWatchlist(mockMovieRepository);
   });
 
   test('should save movie to the repository', () async {
     // arrange
-    when(mockTvRepository.saveWatchlist(testTvDetail))
+    when(mockMovieRepository.saveWatchlist(testMovieDetail))
         .thenAnswer((_) async => Right('Added to Watchlist'));
     // act
-    final result = await usecase.execute(testTvDetail);
+    final result = await usecase.execute(testMovieDetail);
     // assert
-    verify(mockTvRepository.saveWatchlist(testTvDetail));
+    verify(mockMovieRepository.saveWatchlist(testMovieDetail));
     expect(result, Right('Added to Watchlist'));
   });
 }

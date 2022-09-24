@@ -1,3 +1,4 @@
+import 'package:ditonton/presentation/widgets/tv_card_list.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/entities/tv_series.dart';

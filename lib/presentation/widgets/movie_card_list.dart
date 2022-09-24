@@ -6,10 +6,12 @@ import 'package:ditonton/presentation/pages/tv_detail_page.dart';
 import 'package:ditonton/presentation/widgets/my_progress_indicator.dart';
 import 'package:flutter/material.dart';
 
-class TvCard extends StatelessWidget {
-  final TvSeries movie;
+import '../../domain/entities/movie.dart';
 
-  TvCard(this.movie);
+class MovieCard extends StatelessWidget {
+  final Movie movie;
+
+  MovieCard(this.movie);
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,7 @@ class TvCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      movie.name ?? '-',
+                      movie.title ?? '-',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: kHeading6,

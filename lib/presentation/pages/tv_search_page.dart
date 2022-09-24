@@ -1,12 +1,13 @@
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/presentation/provider/tv_search_notifier.dart';
-import 'package:ditonton/presentation/widgets/movie_card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class SearchPage extends StatelessWidget {
-  static const ROUTE_NAME = '/search';
+import '../widgets/tv_card_list.dart';
+
+class TvSearchPage extends StatelessWidget {
+  static const ROUTE_NAME = '/search-tv';
 
   @override
   Widget build(BuildContext context) {
