@@ -21,7 +21,7 @@ void main() {
     voteCount: 1,
   );
   final tMovieResponseModel =
-      MovieResponse(movieList: <MovieModel>[tMovieModel]);
+      MovieResponse(results: <MovieModel>[tMovieModel]);
   group('fromJson', () {
     test('should return a valid model from JSON', () async {
       // arrange

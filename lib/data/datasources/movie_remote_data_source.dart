@@ -30,7 +30,7 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
         await client.getUri(Uri.parse('$BASE_URL/movie/now_playing?$API_KEY'));
 
     if (response.statusCode == 200) {
-      return MovieResponse.fromJson(response.data).movieList;
+      return MovieResponse.fromJson(response.data).results;
     } else {
       throw ServerException();
     }
@@ -54,7 +54,7 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
         .getUri(Uri.parse('$BASE_URL/movie/$id/recommendations?$API_KEY'));
 
     if (response.statusCode == 200) {
-      return MovieResponse.fromJson(response.data).movieList;
+      return MovieResponse.fromJson(response.data).results;
     } else {
       throw ServerException();
     }
@@ -66,7 +66,7 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
         await client.getUri(Uri.parse('$BASE_URL/movie/popular?$API_KEY'));
 
     if (response.statusCode == 200) {
-      return MovieResponse.fromJson(response.data).movieList;
+      return MovieResponse.fromJson(response.data).results;
     } else {
       throw ServerException();
     }
@@ -78,7 +78,7 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
         await client.getUri(Uri.parse('$BASE_URL/movie/top_rated?$API_KEY'));
 
     if (response.statusCode == 200) {
-      return MovieResponse.fromJson(response.data).movieList;
+      return MovieResponse.fromJson(response.data).results;
     } else {
       throw ServerException();
     }
@@ -90,7 +90,7 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
         .getUri(Uri.parse('$BASE_URL/search/movie?$API_KEY&query=$query'));
 
     if (response.statusCode == 200) {
-      return MovieResponse.fromJson(response.data).movieList;
+      return MovieResponse.fromJson(response.data).results;
     } else {
       throw ServerException();
     }
