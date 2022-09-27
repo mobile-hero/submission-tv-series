@@ -7,6 +7,7 @@ import 'package:ditonton/presentation/widgets/my_progress_indicator.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/entities/movie.dart';
+import '../pages/movie_detail_page.dart';
 
 class MovieCard extends StatelessWidget {
   final Movie movie;
@@ -21,7 +22,7 @@ class MovieCard extends StatelessWidget {
         onTap: () {
           Navigator.pushNamed(
             context,
-            TvDetailPage.ROUTE_NAME,
+            MovieDetailPage.ROUTE_NAME,
             arguments: movie.id,
           );
         },
