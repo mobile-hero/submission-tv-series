@@ -1,0 +1,89 @@
+{
+  "project_info": {
+    "project_number": "35622543215",
+    "firebase_url": "https://crypto-handbook-163007.firebaseio.com",
+    "project_id": "crypto-handbook-163007",
+    "storage_bucket": "crypto-handbook-163007.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:35622543215:android:fed6af94b8bc84a68c529a",
+        "android_client_info": {
+          "package_name": "com.dicoding.ditonton"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "35622543215-9769u91nfhpld6qenf21m8fjfqkrtc59.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBI32sfbV8PgpgSLYcnS19eNUtl4_kHvrE"
+        },
+        {
+          "current_key": "AIzaSyCK0lL-CdXmi6IT8VuWV45EBRmnIcVCTw8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "35622543215-9769u91nfhpld6qenf21m8fjfqkrtc59.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "35622543215-7vj7mq0b47lcvodns0fbh0pd0rton7kn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ppsdm.sigma.ppsdm-raisa"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:35622543215:android:ddb9c09445af77bf",
+        "android_client_info": {
+          "package_name": "com.m1ikhsan.tdpsecurity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "35622543215-9769u91nfhpld6qenf21m8fjfqkrtc59.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBI32sfbV8PgpgSLYcnS19eNUtl4_kHvrE"
+        },
+        {
+          "current_key": "AIzaSyCK0lL-CdXmi6IT8VuWV45EBRmnIcVCTw8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "35622543215-9769u91nfhpld6qenf21m8fjfqkrtc59.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "35622543215-7vj7mq0b47lcvodns0fbh0pd0rton7kn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ppsdm.sigma.ppsdm-raisa"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

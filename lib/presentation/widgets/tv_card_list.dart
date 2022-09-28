@@ -4,6 +4,7 @@ import 'package:ditonton/common/utils.dart';
 import 'package:ditonton/domain/entities/tv_series.dart';
 import 'package:ditonton/presentation/pages/tv_detail_page.dart';
 import 'package:ditonton/presentation/widgets/my_progress_indicator.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 
 class TvCard extends StatelessWidget {
@@ -16,7 +17,14 @@ class TvCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4),
       child: InkWell(
-        onTap: () {
+        onTap: () async {
+          await FirebaseAnalytics.instance.logEvent(
+            name: "tv_tapped",
+            parameters: {
+              "id": movie.id,
+              "title": movie.name,
+            },
+          );
           Navigator.pushNamed(
             context,
             TvDetailPage.ROUTE_NAME,

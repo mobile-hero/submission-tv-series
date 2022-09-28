@@ -6,6 +6,8 @@ import 'package:ditonton/domain/entities/tv_series.dart';
 import 'package:ditonton/presentation/pages/pages.dart';
 import 'package:ditonton/presentation/provider/tv_list_notifier.dart';
 import 'package:ditonton/presentation/widgets/my_progress_indicator.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -273,7 +275,14 @@ class MovieList extends StatelessWidget {
           return Container(
             padding: const EdgeInsets.all(8),
             child: InkWell(
-              onTap: () {
+              onTap: () async {
+                await FirebaseAnalytics.instance.logEvent(
+                  name: "movie_tapped",
+                  parameters: {
+                    "id": movie.id,
+                    "title": movie.title,
+                  },
+                );
                 Navigator.pushNamed(
                   context,
                   MovieDetailPage.ROUTE_NAME,
@@ -315,7 +324,14 @@ class TvList extends StatelessWidget {
           return Container(
             padding: const EdgeInsets.all(8),
             child: InkWell(
-              onTap: () {
+              onTap: () async {
+                await FirebaseAnalytics.instance.logEvent(
+                  name: "tv_tapped",
+                  parameters: {
+                    "id": movie.id,
+                    "title": movie.name,
+                  },
+                );
                 Navigator.pushNamed(
                   context,
                   TvDetailPage.ROUTE_NAME,
