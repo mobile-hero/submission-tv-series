@@ -14,19 +14,19 @@ import 'presentation/pages/pages.dart';
 import 'presentation/provider/providers.dart';
 
 void main() async {
-  di.init();
+  WidgetsFlutterBinding.ensureInitialized();
+  await di.init();
   runZonedGuarded<Future<void>>(() async {
-    WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
 
-    FlutterError.onError =
-        FirebaseCrashlytics.instance.recordFlutterFatalError;
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
     runApp(MyApp());
-  }, (error, stack) =>
-      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true));
+  },
+      (error, stack) =>
+          FirebaseCrashlytics.instance.recordError(error, stack, fatal: true));
 }
 
 class MyApp extends StatelessWidget {
