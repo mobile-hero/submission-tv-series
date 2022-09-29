@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:ditonton/data/datasources/datasources.dart';
 import 'package:ditonton/data/repositories/movie_repository_impl.dart';
@@ -7,22 +10,23 @@ import 'package:ditonton/domain/repositories/tv_repository.dart';
 import 'package:ditonton/domain/usecases/usecases.dart';
 import 'package:ditonton/presentation/provider/providers.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 
 final locator = GetIt.instance;
 
-void init() {
+Future<void> init() async {
   // provider
   locator.registerFactory(
-        () => MovieListNotifier(
+    () => MovieListNotifier(
       getNowPlayingMovies: locator(),
       getPopularMovies: locator(),
       getTopRatedMovies: locator(),
     ),
   );
   locator.registerFactory(
-        () => MovieDetailNotifier(
+    () => MovieDetailNotifier(
       getMovieDetail: locator(),
       getMovieRecommendations: locator(),
       getWatchListStatus: locator(),
@@ -31,22 +35,22 @@ void init() {
     ),
   );
   locator.registerFactory(
-        () => MovieSearchNotifier(
+    () => MovieSearchNotifier(
       searchMovies: locator(),
     ),
   );
   locator.registerFactory(
-        () => PopularMoviesNotifier(
+    () => PopularMoviesNotifier(
       locator(),
     ),
   );
   locator.registerFactory(
-        () => TopRatedMoviesNotifier(
+    () => TopRatedMoviesNotifier(
       getTopRatedMovies: locator(),
     ),
   );
   locator.registerFactory(
-        () => WatchlistMovieNotifier(
+    () => WatchlistMovieNotifier(
       getWatchlistMovies: locator(),
     ),
   );
@@ -119,7 +123,7 @@ void init() {
 
   // repository
   locator.registerLazySingleton<MovieRepository>(
-        () => MovieRepositoryImpl(
+    () => MovieRepositoryImpl(
       remoteDataSource: locator(),
       localDataSource: locator(),
     ),
@@ -134,9 +138,9 @@ void init() {
 
   // data sources
   locator.registerLazySingleton<MovieRemoteDataSource>(
-          () => MovieRemoteDataSourceImpl(client: locator()));
+      () => MovieRemoteDataSourceImpl(client: locator()));
   locator.registerLazySingleton<MovieLocalDataSource>(
-          () => MovieLocalDataSourceImpl(databaseHelper: locator()));
+      () => MovieLocalDataSourceImpl(databaseHelper: locator()));
 
   locator.registerLazySingleton<TvRemoteDataSource>(
       () => TvRemoteDataSourceImpl(client: locator()));
@@ -148,12 +152,21 @@ void init() {
 
   // external
   locator.registerLazySingleton(() => http.Client());
+
+  final byteData = await rootBundle.load('assets/themoviedb.pem');
+
   locator.registerLazySingleton<Dio>(() {
     final dio = Dio();
     if (kDebugMode) {
       dio.interceptors
           .add(LogInterceptor(requestBody: true, responseBody: true));
     }
+    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+        (client) {
+      final sc = SecurityContext();
+      sc.setTrustedCertificatesBytes(byteData.buffer.asUint8List());
+      return HttpClient(context: sc);
+    };
     return dio;
   });
 }

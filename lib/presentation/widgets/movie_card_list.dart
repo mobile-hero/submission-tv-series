@@ -1,9 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/common/utils.dart';
-import 'package:ditonton/domain/entities/tv_series.dart';
-import 'package:ditonton/presentation/pages/tv_detail_page.dart';
 import 'package:ditonton/presentation/widgets/my_progress_indicator.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/entities/movie.dart';
@@ -19,7 +18,14 @@ class MovieCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4),
       child: InkWell(
-        onTap: () {
+        onTap: () async {
+          await FirebaseAnalytics.instance.logEvent(
+            name: "movie_tapped",
+            parameters: {
+              "id": movie.id,
+              "title": movie.title,
+            },
+          );
           Navigator.pushNamed(
             context,
             MovieDetailPage.ROUTE_NAME,
