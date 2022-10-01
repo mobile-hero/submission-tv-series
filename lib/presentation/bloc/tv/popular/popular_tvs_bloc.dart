@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:ditonton/domain/entities/tv_series.dart';
-import 'package:ditonton/presentation/bloc/common_error_state.dart';
+import 'package:ditonton/presentation/bloc/common_states.dart';
 import 'package:meta/meta.dart';
 
 import '../../../../domain/usecases/get_popular_tvs.dart';
@@ -23,7 +23,7 @@ class PopularTvsBloc extends Bloc<PopularTvsEvent, PopularTvsState> {
         (failure) => emit(PopularTvsError(failure.message)),
         (success) {
           this.source.addAll(success);
-          emit(PopularTvsSuccess());
+          emit(PopularTvsSuccess(source));
         },
       );
     });

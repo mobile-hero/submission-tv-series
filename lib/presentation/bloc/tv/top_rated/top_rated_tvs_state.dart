@@ -5,9 +5,12 @@ abstract class TopRatedTvsState {}
 
 class TopRatedTvsInitial extends TopRatedTvsState {}
 
-class TopRatedTvsLoading extends TopRatedTvsState {}
+class TopRatedTvsLoading extends CommonLoadingState with TopRatedTvsState {}
 
-class TopRatedTvsSuccess extends TopRatedTvsState {}
+class TopRatedTvsSuccess extends CommonSuccessState<TvSeries>
+    with TopRatedTvsState {
+  TopRatedTvsSuccess(List<TvSeries> source) : super(source);
+}
 
 class TopRatedTvsError extends CommonErrorState with TopRatedTvsState {
   TopRatedTvsError(String message) : super(message);

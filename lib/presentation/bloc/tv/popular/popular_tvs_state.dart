@@ -5,9 +5,11 @@ abstract class PopularTvsState {}
 
 class PopularTvsInitial extends PopularTvsState {}
 
-class PopularTvsLoading extends PopularTvsState {}
+class PopularTvsLoading extends CommonLoadingState with PopularTvsState {}
 
-class PopularTvsSuccess extends PopularTvsState {}
+class PopularTvsSuccess extends CommonSuccessState<TvSeries> with PopularTvsState {
+  PopularTvsSuccess(List<TvSeries> source) : super(source);
+}
 
 class PopularTvsError extends CommonErrorState with PopularTvsState {
   PopularTvsError(String message) : super(message);

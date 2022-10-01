@@ -5,9 +5,13 @@ abstract class TopRatedMoviesState {}
 
 class TopRatedMoviesInitial extends TopRatedMoviesState {}
 
-class TopRatedMoviesLoading extends TopRatedMoviesState {}
+class TopRatedMoviesLoading extends CommonLoadingState
+    with TopRatedMoviesState {}
 
-class TopRatedMoviesSuccess extends TopRatedMoviesState {}
+class TopRatedMoviesSuccess extends CommonSuccessState<Movie>
+    with TopRatedMoviesState {
+  TopRatedMoviesSuccess(List<Movie> source) : super(source);
+}
 
 class TopRatedMoviesError extends CommonErrorState with TopRatedMoviesState {
   TopRatedMoviesError(String message) : super(message);

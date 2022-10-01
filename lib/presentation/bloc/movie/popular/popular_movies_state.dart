@@ -5,9 +5,12 @@ abstract class PopularMoviesState {}
 
 class PopularMoviesInitial extends PopularMoviesState {}
 
-class PopularMoviesLoading extends PopularMoviesState {}
+class PopularMoviesLoading extends CommonLoadingState with PopularMoviesState {}
 
-class PopularMoviesSuccess extends PopularMoviesState {}
+class PopularMoviesSuccess extends CommonSuccessState<Movie>
+    with PopularMoviesState {
+  PopularMoviesSuccess(List<Movie> source) : super(source);
+}
 
 class PopularMoviesError extends CommonErrorState with PopularMoviesState {
   PopularMoviesError(String message) : super(message);

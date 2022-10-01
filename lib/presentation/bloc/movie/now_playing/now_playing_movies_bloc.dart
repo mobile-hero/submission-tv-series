@@ -3,6 +3,7 @@ import 'package:meta/meta.dart';
 
 import '../../../../domain/entities/movie.dart';
 import '../../../../domain/usecases/get_now_playing_movies.dart';
+import '../../../bloc/common_states.dart';
 
 part 'now_playing_movies_event.dart';
 
@@ -24,7 +25,7 @@ class NowPlayingMoviesBloc
         (failure) => emit(NowPlayingMoviesError(failure.message)),
         (success) {
           this.source.addAll(success);
-          emit(NowPlayingMoviesSuccess());
+          emit(NowPlayingMoviesSuccess(source));
         },
       );
     });

@@ -5,9 +5,12 @@ abstract class NowPlayingTvsState {}
 
 class NowPlayingTvsInitial extends NowPlayingTvsState {}
 
-class NowPlayingTvsLoading extends NowPlayingTvsState {}
+class NowPlayingTvsLoading extends CommonLoadingState with NowPlayingTvsState {}
 
-class NowPlayingTvsSuccess extends NowPlayingTvsState {}
+class NowPlayingTvsSuccess extends CommonSuccessState<TvSeries>
+    with NowPlayingTvsState {
+  NowPlayingTvsSuccess(List<TvSeries> source) : super(source);
+}
 
 class NowPlayingTvsError extends CommonErrorState with NowPlayingTvsState {
   NowPlayingTvsError(String message) : super(message);

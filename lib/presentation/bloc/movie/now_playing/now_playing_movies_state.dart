@@ -5,12 +5,15 @@ abstract class NowPlayingMoviesState {}
 
 class NowPlayingMoviesInitial extends NowPlayingMoviesState {}
 
-class NowPlayingMoviesLoading extends NowPlayingMoviesState {}
+class NowPlayingMoviesLoading extends CommonLoadingState
+    with NowPlayingMoviesState {}
 
-class NowPlayingMoviesSuccess extends NowPlayingMoviesState {}
+class NowPlayingMoviesSuccess extends CommonSuccessState<Movie>
+    with NowPlayingMoviesState {
+  NowPlayingMoviesSuccess(List<Movie> source) : super(source);
+}
 
-class NowPlayingMoviesError extends NowPlayingMoviesState {
-  final String message;
-
-  NowPlayingMoviesError(this.message);
+class NowPlayingMoviesError extends CommonErrorState
+    with NowPlayingMoviesState {
+  NowPlayingMoviesError(String message) : super(message);
 }

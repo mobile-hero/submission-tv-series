@@ -8,17 +8,13 @@ import 'package:ditonton/presentation/bloc/tv/now_playing/now_playing_tvs_bloc.d
 import 'package:ditonton/presentation/bloc/tv/popular/popular_tvs_bloc.dart';
 import 'package:ditonton/presentation/bloc/tv/top_rated/top_rated_tvs_bloc.dart';
 import 'package:ditonton/presentation/pages/pages.dart';
-import 'package:ditonton/presentation/provider/tv_list_notifier.dart';
-import 'package:ditonton/presentation/widgets/error_message_container.dart';
+import 'package:ditonton/presentation/widgets/horizontal_images.dart';
 import 'package:ditonton/presentation/widgets/my_progress_indicator.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 
 import '../../domain/entities/movie.dart';
 import '../bloc/movie/popular/popular_movies_bloc.dart';
-import '../provider/movie_list_notifier.dart';
 
 class HomeMoviePage extends StatefulWidget {
   static const ROUTE_NAME = "/home";
@@ -34,16 +30,16 @@ class _HomeMoviePageState extends State<HomeMoviePage>
   @override
   void initState() {
     super.initState();
-    Future.microtask(() {
-      Provider.of<MovieListNotifier>(context, listen: false)
-        ..fetchNowPlayingMovies()
-        ..fetchPopularMovies()
-        ..fetchTopRatedMovies();
-      Provider.of<TvListNotifier>(context, listen: false)
-        ..fetchNowPlayingTvs()
-        ..fetchPopularTvs()
-        ..fetchTopRatedTvs();
-    });
+    // Future.microtask(() {
+    //   Provider.of<MovieListNotifier>(context, listen: false)
+    //     ..fetchNowPlayingMovies()
+    //     ..fetchPopularMovies()
+    //     ..fetchTopRatedMovies();
+    //   Provider.of<TvListNotifier>(context, listen: false)
+    //     ..fetchNowPlayingTvs()
+    //     ..fetchPopularTvs()
+    //     ..fetchTopRatedTvs();
+    // });
   }
 
   @override
@@ -128,55 +124,22 @@ class _HomeMoviePageState extends State<HomeMoviePage>
                           'Now Playing Movie',
                           style: kHeading6,
                         ),
-                        BlocBuilder<NowPlayingMoviesBloc,
-                            NowPlayingMoviesState>(
-                          builder: (context, state) {
-                            if (state is NowPlayingMoviesLoading) {
-                              return MyProgressIndicator();
-                            } else if (state is NowPlayingMoviesSuccess) {
-                              return MovieList(
-                                  context.read<NowPlayingMoviesBloc>().source);
-                            } else if (state is NowPlayingMoviesError) {
-                              return Text('Failed');
-                            } else {
-                              return SizedBox.shrink();
-                            }
-                          },
-                        ),
+                        HorizontalImagesMovie<NowPlayingMoviesBloc,
+                            NowPlayingMoviesEvent, NowPlayingMoviesState>(),
                         SubHeading(
                           title: 'Popular Movie',
                           onTap: () => Navigator.pushNamed(
                               context, PopularMoviesPage.ROUTE_NAME),
                         ),
-                        BlocBuilder<PopularMoviesBloc, PopularMoviesState>(
-                            builder: (context, state) {
-                          if (state is PopularMoviesLoading) {
-                            return MyProgressIndicator();
-                          } else if (state is PopularMoviesSuccess) {
-                            return MovieList(
-                                context.read<PopularMoviesBloc>().source);
-                          } else if (state is PopularMoviesError) {
-                            return Text('Failed');
-                          } else {
-                            return SizedBox.shrink();
-                          }
-                        }),
+                        HorizontalImagesMovie<PopularMoviesBloc,
+                            PopularMoviesEvent, PopularMoviesState>(),
                         SubHeading(
                           title: 'Top Rated Movie',
                           onTap: () => Navigator.pushNamed(
                               context, TopRatedMoviesPage.ROUTE_NAME),
                         ),
-                        BlocBuilder<TopRatedMoviesBloc, TopRatedMoviesState>(
-                            builder: (context, state) {
-                          if (state is TopRatedMoviesLoading) {
-                            return MyProgressIndicator();
-                          } else if (state is TopRatedMoviesSuccess) {
-                            return MovieList(
-                                context.read<TopRatedMoviesBloc>().source);
-                          } else {
-                            return Text('Failed');
-                          }
-                        }),
+                        HorizontalImagesMovie<TopRatedMoviesBloc,
+                            TopRatedMoviesEvent, TopRatedMoviesState>(),
                       ],
                     ),
                   ),
@@ -191,55 +154,22 @@ class _HomeMoviePageState extends State<HomeMoviePage>
                           'Now Playing TV',
                           style: kHeading6,
                         ),
-                        BlocBuilder<NowPlayingTvsBloc, NowPlayingTvsState>(
-                            builder: (context, state) {
-                          if (state is NowPlayingTvsLoading) {
-                            return MyProgressIndicator();
-                          } else if (state is NowPlayingTvsSuccess) {
-                            return TvList(
-                                context.read<NowPlayingTvsBloc>().source);
-                          } else if (state is NowPlayingTvsError) {
-                            return ErrorMessageContainer(message: 'Failed');
-                          } else {
-                            return const SizedBox.shrink();
-                          }
-                        }),
+                        HorizontalImagesTv<NowPlayingTvsBloc,
+                            NowPlayingTvsEvent, NowPlayingTvsState>(),
                         SubHeading(
                           title: 'Popular TV',
                           onTap: () => Navigator.pushNamed(
                               context, PopularTvsPage.ROUTE_NAME),
                         ),
-                        BlocBuilder<PopularTvsBloc, PopularTvsState>(
-                            builder: (context, state) {
-                          if (state is PopularTvsLoading) {
-                            return MyProgressIndicator();
-                          } else if (state is PopularTvsSuccess) {
-                            return TvList(
-                                context.read<PopularTvsBloc>().source);
-                          } else if (state is PopularTvsError) {
-                            return Text('Failed');
-                          } else {
-                            return const SizedBox.shrink();
-                          }
-                        }),
+                        HorizontalImagesTv<PopularTvsBloc, PopularTvsEvent,
+                            PopularTvsState>(),
                         SubHeading(
                           title: 'Top Rated TV',
                           onTap: () => Navigator.pushNamed(
                               context, TopRatedTvsPage.ROUTE_NAME),
                         ),
-                        BlocBuilder<TopRatedTvsBloc, TopRatedTvsState>(
-                            builder: (context, state) {
-                          if (state is TopRatedTvsLoading) {
-                            return MyProgressIndicator();
-                          } else if (state is TopRatedTvsSuccess) {
-                            return TvList(
-                                context.read<TopRatedTvsBloc>().source);
-                          } else if (state is TopRatedTvsError) {
-                            return Text('Failed');
-                          } else {
-                            return const SizedBox.shrink();
-                          }
-                        }),
+                        HorizontalImagesTv<TopRatedTvsBloc, TopRatedTvsEvent,
+                            TopRatedTvsState>(),
                       ],
                     ),
                   ),

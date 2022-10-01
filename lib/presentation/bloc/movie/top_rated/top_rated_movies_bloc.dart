@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:ditonton/domain/entities/movie.dart';
 import 'package:ditonton/domain/usecases/get_top_rated_movies.dart';
-import 'package:ditonton/presentation/bloc/common_error_state.dart';
+import 'package:ditonton/presentation/bloc/common_states.dart';
 import 'package:meta/meta.dart';
 
 part 'top_rated_movies_event.dart';
@@ -23,7 +23,7 @@ class TopRatedMoviesBloc
         (failure) => emit(TopRatedMoviesError(failure.message)),
         (success) {
           this.source.addAll(success);
-          emit(TopRatedMoviesSuccess());
+          emit(TopRatedMoviesSuccess(source));
         },
       );
     });
