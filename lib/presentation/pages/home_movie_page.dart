@@ -30,16 +30,6 @@ class _HomeMoviePageState extends State<HomeMoviePage>
   @override
   void initState() {
     super.initState();
-    // Future.microtask(() {
-    //   Provider.of<MovieListNotifier>(context, listen: false)
-    //     ..fetchNowPlayingMovies()
-    //     ..fetchPopularMovies()
-    //     ..fetchTopRatedMovies();
-    //   Provider.of<TvListNotifier>(context, listen: false)
-    //     ..fetchNowPlayingTvs()
-    //     ..fetchPopularTvs()
-    //     ..fetchTopRatedTvs();
-    // });
   }
 
   @override

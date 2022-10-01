@@ -10,7 +10,9 @@ import 'package:ditonton/domain/repositories/tv_repository.dart';
 import 'package:ditonton/domain/usecases/usecases.dart';
 import 'package:ditonton/presentation/bloc/movie/now_playing/now_playing_movies_bloc.dart';
 import 'package:ditonton/presentation/bloc/movie/popular/popular_movies_bloc.dart';
+import 'package:ditonton/presentation/bloc/movie/search/search_movies_bloc.dart';
 import 'package:ditonton/presentation/bloc/movie/top_rated/top_rated_movies_bloc.dart';
+import 'package:ditonton/presentation/bloc/tv/search/search_tvs_bloc.dart';
 import 'package:ditonton/presentation/provider/providers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -31,6 +33,8 @@ Future<void> init() async {
   locator.registerFactory(() => NowPlayingTvsBloc(locator()));
   locator.registerFactory(() => PopularTvsBloc(locator()));
   locator.registerFactory(() => TopRatedTvsBloc(locator()));
+  locator.registerFactory(() => SearchMoviesBloc(locator()));
+  locator.registerFactory(() => SearchTvsBloc(locator()));
   locator.registerFactory(
     () => MovieListNotifier(
       getNowPlayingMovies: locator(),

@@ -16,9 +16,6 @@ class _PopularTvsPageState extends State<PopularTvsPage> {
   @override
   void initState() {
     super.initState();
-    // Future.microtask(() =>
-    //     Provider.of<PopularTvsNotifier>(context, listen: false)
-    //         .fetchPopularTvs());
   }
 
   @override
