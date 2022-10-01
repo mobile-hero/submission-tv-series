@@ -1,5 +1,5 @@
 abstract class CommonSuccessState<T> {
-  final List<T> source;
+  final T source;
 
   CommonSuccessState(this.source);
 }

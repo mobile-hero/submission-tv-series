@@ -8,7 +8,7 @@ class TopRatedMoviesInitial extends TopRatedMoviesState {}
 class TopRatedMoviesLoading extends CommonLoadingState
     with TopRatedMoviesState {}
 
-class TopRatedMoviesSuccess extends CommonSuccessState<Movie>
+class TopRatedMoviesSuccess extends CommonSuccessState<List<Movie>>
     with TopRatedMoviesState {
   TopRatedMoviesSuccess(List<Movie> source) : super(source);
 }

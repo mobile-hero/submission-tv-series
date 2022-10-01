@@ -8,7 +8,7 @@ class NowPlayingMoviesInitial extends NowPlayingMoviesState {}
 class NowPlayingMoviesLoading extends CommonLoadingState
     with NowPlayingMoviesState {}
 
-class NowPlayingMoviesSuccess extends CommonSuccessState<Movie>
+class NowPlayingMoviesSuccess extends CommonSuccessState<List<Movie>>
     with NowPlayingMoviesState {
   NowPlayingMoviesSuccess(List<Movie> source) : super(source);
 }

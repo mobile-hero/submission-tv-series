@@ -7,7 +7,7 @@ class PopularMoviesInitial extends PopularMoviesState {}
 
 class PopularMoviesLoading extends CommonLoadingState with PopularMoviesState {}
 
-class PopularMoviesSuccess extends CommonSuccessState<Movie>
+class PopularMoviesSuccess extends CommonSuccessState<List<Movie>>
     with PopularMoviesState {
   PopularMoviesSuccess(List<Movie> source) : super(source);
 }

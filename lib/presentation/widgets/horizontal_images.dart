@@ -20,7 +20,7 @@ class HorizontalImagesMovie<B extends Bloc<E, S>, E extends Object,
       builder: (context, state) {
         if (state is CommonLoadingState) {
           return MyProgressIndicator();
-        } else if (state is CommonSuccessState<Movie>) {
+        } else if (state is CommonSuccessState<List<Movie>>) {
           return MovieList(state.source);
         } else if (state is CommonErrorState) {
           return ErrorMessageContainer(message: 'Failed');
@@ -42,7 +42,7 @@ class HorizontalImagesTv<B extends Bloc<E, S>, E extends Object,
       builder: (context, state) {
         if (state is CommonLoadingState) {
           return MyProgressIndicator();
-        } else if (state is CommonSuccessState<TvSeries>) {
+        } else if (state is CommonSuccessState<List<TvSeries>>) {
           return TvList(state.source);
         } else if (state is CommonErrorState) {
           return ErrorMessageContainer(message: 'Failed');

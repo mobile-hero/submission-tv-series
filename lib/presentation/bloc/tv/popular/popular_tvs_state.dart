@@ -7,7 +7,7 @@ class PopularTvsInitial extends PopularTvsState {}
 
 class PopularTvsLoading extends CommonLoadingState with PopularTvsState {}
 
-class PopularTvsSuccess extends CommonSuccessState<TvSeries> with PopularTvsState {
+class PopularTvsSuccess extends CommonSuccessState<List<TvSeries>> with PopularTvsState {
   PopularTvsSuccess(List<TvSeries> source) : super(source);
 }
 

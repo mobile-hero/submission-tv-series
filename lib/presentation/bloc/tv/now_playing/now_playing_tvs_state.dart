@@ -7,7 +7,7 @@ class NowPlayingTvsInitial extends NowPlayingTvsState {}
 
 class NowPlayingTvsLoading extends CommonLoadingState with NowPlayingTvsState {}
 
-class NowPlayingTvsSuccess extends CommonSuccessState<TvSeries>
+class NowPlayingTvsSuccess extends CommonSuccessState<List<TvSeries>>
     with NowPlayingTvsState {
   NowPlayingTvsSuccess(List<TvSeries> source) : super(source);
 }

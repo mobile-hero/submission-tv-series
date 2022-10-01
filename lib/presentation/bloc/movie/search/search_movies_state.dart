@@ -7,7 +7,7 @@ class SearchMoviesInitial extends SearchMoviesState {}
 
 class SearchMoviesLoading extends SearchMoviesState {}
 
-class SearchMoviesSuccess extends CommonSuccessState<Movie>
+class SearchMoviesSuccess extends CommonSuccessState<List<Movie>>
     with SearchMoviesState {
   SearchMoviesSuccess(List<Movie> source) : super(source);
 }

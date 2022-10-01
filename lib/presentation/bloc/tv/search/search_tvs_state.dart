@@ -7,7 +7,7 @@ class SearchTvsInitial extends SearchTvsState {}
 
 class SearchTvsLoading extends SearchTvsState {}
 
-class SearchTvsSuccess extends CommonSuccessState<TvSeries>
+class SearchTvsSuccess extends CommonSuccessState<List<TvSeries>>
     with SearchTvsState {
   SearchTvsSuccess(List<TvSeries> source) : super(source);
 }
