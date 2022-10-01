@@ -8,16 +8,29 @@ import 'package:ditonton/data/repositories/tv_repository_impl.dart';
 import 'package:ditonton/domain/repositories/movie_repository.dart';
 import 'package:ditonton/domain/repositories/tv_repository.dart';
 import 'package:ditonton/domain/usecases/usecases.dart';
+import 'package:ditonton/presentation/bloc/movie/now_playing/now_playing_movies_bloc.dart';
+import 'package:ditonton/presentation/bloc/movie/popular/popular_movies_bloc.dart';
+import 'package:ditonton/presentation/bloc/movie/top_rated/top_rated_movies_bloc.dart';
 import 'package:ditonton/presentation/provider/providers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 
+import 'presentation/bloc/tv/now_playing/now_playing_tvs_bloc.dart';
+import 'presentation/bloc/tv/popular/popular_tvs_bloc.dart';
+import 'presentation/bloc/tv/top_rated/top_rated_tvs_bloc.dart';
+
 final locator = GetIt.instance;
 
 Future<void> init() async {
   // provider
+  locator.registerFactory(() => NowPlayingMoviesBloc(locator()));
+  locator.registerFactory(() => PopularMoviesBloc(locator()));
+  locator.registerFactory(() => TopRatedMoviesBloc(locator()));
+  locator.registerFactory(() => NowPlayingTvsBloc(locator()));
+  locator.registerFactory(() => PopularTvsBloc(locator()));
+  locator.registerFactory(() => TopRatedTvsBloc(locator()));
   locator.registerFactory(
     () => MovieListNotifier(
       getNowPlayingMovies: locator(),
