@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:ditonton/domain/usecases/get_movie_detail.dart';
 import 'package:ditonton/domain/usecases/get_movie_recommendations.dart';
 import 'package:ditonton/presentation/bloc/common_states.dart';
+import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 import '../../../../domain/entities/movie.dart';
@@ -37,9 +38,12 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
   }
 }
 
-class MovieDetailBlocResult {
+class MovieDetailBlocResult extends Equatable {
   final MovieDetail detail;
   final List<Movie> recommendations;
 
   MovieDetailBlocResult(this.detail, this.recommendations);
+
+  @override
+  List<Object?> get props => [detail, recommendations];
 }

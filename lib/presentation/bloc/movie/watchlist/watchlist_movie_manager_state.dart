@@ -1,22 +1,28 @@
 part of 'watchlist_movie_manager_bloc.dart';
 
 @immutable
-abstract class WatchlistMovieManagerState {}
+abstract class WatchlistMovieManagerState extends CommonEquatableState {}
 
 class WatchlistMovieManagerInitial extends WatchlistMovieManagerState {}
 
 class WatchlistMovieManagerLoading extends WatchlistMovieManagerState {}
 
-class WatchlistMovieManagerSuccess extends CommonSuccessState<bool>
-    with WatchlistMovieManagerState {
+class WatchlistMovieManagerSuccess extends WatchlistMovieManagerState implements CommonSuccessState<bool> {
+  final bool source;
   final String? message;
 
-  WatchlistMovieManagerSuccess(bool source, this.message) : super(source);
+  WatchlistMovieManagerSuccess(this.source, this.message);
+
+  @override
+  List<Object?> get props => [source, message];
 }
 
-class WatchlistMovieManagerError extends CommonErrorState
-    with WatchlistMovieManagerState {
+class WatchlistMovieManagerError extends WatchlistMovieManagerState implements CommonErrorState {
   final bool lastResult;
+  final String message;
 
-  WatchlistMovieManagerError(this.lastResult, String message) : super(message);
+  WatchlistMovieManagerError(this.lastResult, this.message);
+
+  @override
+  List<Object?> get props => [lastResult, message];
 }

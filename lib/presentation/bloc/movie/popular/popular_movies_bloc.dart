@@ -3,6 +3,7 @@ import 'package:ditonton/domain/entities/movie.dart';
 import 'package:ditonton/domain/usecases/get_popular_movies.dart';
 import 'package:ditonton/presentation/bloc/common_error_state.dart';
 import 'package:ditonton/presentation/bloc/common_states.dart';
+import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 part 'popular_movies_event.dart';

@@ -1,19 +1,29 @@
 part of 'now_playing_movies_bloc.dart';
 
 @immutable
-abstract class NowPlayingMoviesState {}
+abstract class NowPlayingMoviesState extends CommonEquatableState {}
 
 class NowPlayingMoviesInitial extends NowPlayingMoviesState {}
 
-class NowPlayingMoviesLoading extends CommonLoadingState
-    with NowPlayingMoviesState {}
+class NowPlayingMoviesLoading extends NowPlayingMoviesState
+    implements CommonLoadingState {}
 
-class NowPlayingMoviesSuccess extends CommonSuccessState<List<Movie>>
-    with NowPlayingMoviesState {
-  NowPlayingMoviesSuccess(List<Movie> source) : super(source);
+class NowPlayingMoviesSuccess extends NowPlayingMoviesState
+    implements CommonSuccessState<List<Movie>> {
+  final List<Movie> source;
+
+  NowPlayingMoviesSuccess(this.source);
+
+  @override
+  List<Object?> get props => [source];
 }
 
-class NowPlayingMoviesError extends CommonErrorState
-    with NowPlayingMoviesState {
-  NowPlayingMoviesError(String message) : super(message);
+class NowPlayingMoviesError extends NowPlayingMoviesState
+    implements CommonErrorState {
+  final String message;
+
+  NowPlayingMoviesError(this.message);
+
+  @override
+  List<Object?> get props => [message];
 }
