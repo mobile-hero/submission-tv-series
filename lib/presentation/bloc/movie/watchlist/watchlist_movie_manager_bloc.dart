@@ -27,17 +27,13 @@ class WatchlistMovieManagerBloc
       emit(WatchlistMovieManagerLoading());
       final result = await getWatchListStatus.execute(event.id);
       this.isAddedToWatchlist = result;
-      emit(WatchlistMovieManagerSuccess(result, null));
+      emit(WatchlistMovieManagerSuccess(result, event.message));
     });
     on<AddToWatchlist>((event, emit) async {
       emit(WatchlistMovieManagerLoading());
       final result = await saveWatchlist.execute(event.detail);
       result.fold(
-        (failure) {
-          if (state is WatchlistMovieManagerSuccess) {
-            emit(WatchlistMovieManagerError(false, failure.message));
-          }
-        },
+        (failure) => emit(WatchlistMovieManagerError(false, failure.message)),
         (success) {
           add(RefreshWatchlistStatus(
             event.detail.id,
@@ -50,11 +46,7 @@ class WatchlistMovieManagerBloc
       emit(WatchlistMovieManagerLoading());
       final result = await removeWatchlist.execute(event.detail);
       result.fold(
-        (failure) {
-          if (state is WatchlistMovieManagerSuccess) {
-            emit(WatchlistMovieManagerError(false, failure.message));
-          }
-        },
+        (failure) => emit(WatchlistMovieManagerError(false, failure.message)),
         (success) {
           add(RefreshWatchlistStatus(
             event.detail.id,
