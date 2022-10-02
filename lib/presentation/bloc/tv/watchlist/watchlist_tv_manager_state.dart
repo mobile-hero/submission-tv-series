@@ -1,22 +1,28 @@
 part of 'watchlist_tv_manager_bloc.dart';
 
 @immutable
-abstract class WatchlistTvManagerState {}
+abstract class WatchlistTvManagerState extends CommonEquatableState {}
 
 class WatchlistTvManagerInitial extends WatchlistTvManagerState {}
 
 class WatchlistTvManagerLoading extends WatchlistTvManagerState {}
 
-class WatchlistTvManagerSuccess extends CommonSuccessState<bool>
-    with WatchlistTvManagerState {
+class WatchlistTvManagerSuccess extends WatchlistTvManagerState implements CommonSuccessState<bool> {
+  final bool source;
   final String? message;
 
-  WatchlistTvManagerSuccess(bool source, this.message) : super(source);
+  WatchlistTvManagerSuccess(this.source, this.message);
+
+  @override
+  List<Object?> get props => [source, message];
 }
 
-class WatchlistTvManagerError extends CommonErrorState
-    with WatchlistTvManagerState {
+class WatchlistTvManagerError extends WatchlistTvManagerState implements CommonErrorState {
   final bool lastResult;
+  final String message;
 
-  WatchlistTvManagerError(this.lastResult, String message) : super(message);
+  WatchlistTvManagerError(this.lastResult, this.message);
+
+  @override
+  List<Object?> get props => [lastResult, message];
 }

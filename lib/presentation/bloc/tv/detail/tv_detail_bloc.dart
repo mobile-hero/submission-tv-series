@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 import '../../../../domain/entities/tv_detail.dart';
@@ -37,9 +38,12 @@ class TvDetailBloc extends Bloc<TvDetailEvent, TvDetailState> {
   }
 }
 
-class TvDetailBlocResult {
+class TvDetailBlocResult extends Equatable {
   final TvDetail detail;
   final List<TvSeries> recommendations;
 
   TvDetailBlocResult(this.detail, this.recommendations);
+
+  @override
+  List<Object?> get props => [detail, recommendations];
 }

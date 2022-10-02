@@ -1,17 +1,29 @@
 part of 'now_playing_tvs_bloc.dart';
 
 @immutable
-abstract class NowPlayingTvsState {}
+abstract class NowPlayingTvsState extends CommonEquatableState {}
 
 class NowPlayingTvsInitial extends NowPlayingTvsState {}
 
-class NowPlayingTvsLoading extends CommonLoadingState with NowPlayingTvsState {}
+class NowPlayingTvsLoading extends NowPlayingTvsState
+    implements CommonLoadingState {}
 
-class NowPlayingTvsSuccess extends CommonSuccessState<List<TvSeries>>
-    with NowPlayingTvsState {
-  NowPlayingTvsSuccess(List<TvSeries> source) : super(source);
+class NowPlayingTvsSuccess extends NowPlayingTvsState
+    implements CommonSuccessState<List<TvSeries>> {
+  final List<TvSeries> source;
+
+  NowPlayingTvsSuccess(this.source);
+
+  @override
+  List<Object?> get props => [source];
 }
 
-class NowPlayingTvsError extends CommonErrorState with NowPlayingTvsState {
-  NowPlayingTvsError(String message) : super(message);
+class NowPlayingTvsError extends NowPlayingTvsState
+    implements CommonErrorState {
+  final String message;
+
+  NowPlayingTvsError(this.message);
+
+  @override
+  List<Object?> get props => [message];
 }
