@@ -67,7 +67,7 @@ class WatchlistMovieManagerBloc
       if (isAddedToWatchlist) {
         add(RemoveFromWatchlist(event.detail));
       } else {
-        add(RemoveFromWatchlist(event.detail));
+        add(AddToWatchlist(event.detail));
       }
     });
   }

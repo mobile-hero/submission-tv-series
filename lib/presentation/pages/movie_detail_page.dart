@@ -1,12 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/common/utils.dart';
-import 'package:ditonton/domain/entities/genre.dart';
 import 'package:ditonton/domain/entities/movie.dart';
 import 'package:ditonton/domain/entities/movie_detail.dart';
 import 'package:ditonton/presentation/bloc/movie/detail/movie_detail_bloc.dart';
 import 'package:ditonton/presentation/bloc/movie/watchlist/watchlist_movie_manager_bloc.dart';
-import 'package:ditonton/presentation/provider/movie_detail_notifier.dart';
 import 'package:ditonton/presentation/widgets/error_message_container.dart';
 import 'package:ditonton/presentation/widgets/my_progress_indicator.dart';
 import 'package:flutter/material.dart';
@@ -44,10 +42,12 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => locator.get<MovieDetailBloc>(),
+          create: (context) => locator.get<MovieDetailBloc>()
+            ..add(GetMovieDetailEvent(widget.id)),
         ),
         BlocProvider(
-          create: (context) => locator.get<WatchlistMovieManagerBloc>(),
+          create: (context) => locator.get<WatchlistMovieManagerBloc>()
+            ..add(RefreshWatchlistStatus(widget.id)),
         ),
       ],
       child: Scaffold(
