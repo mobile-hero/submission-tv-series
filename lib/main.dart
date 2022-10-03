@@ -4,12 +4,12 @@ import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/common/utils.dart';
 import 'package:ditonton/firebase_options.dart';
 import 'package:ditonton/injection.dart' as di;
+import 'package:ditonton/presentation/bloc/movie/watchlist/watchlist_movie_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 
 import 'presentation/bloc/movie/now_playing/now_playing_movies_bloc.dart';
 import 'presentation/bloc/movie/popular/popular_movies_bloc.dart';
@@ -18,7 +18,6 @@ import 'presentation/bloc/tv/now_playing/now_playing_tvs_bloc.dart';
 import 'presentation/bloc/tv/popular/popular_tvs_bloc.dart';
 import 'presentation/bloc/tv/top_rated/top_rated_tvs_bloc.dart';
 import 'presentation/pages/pages.dart';
-import 'presentation/provider/providers.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -64,6 +63,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) =>
           di.locator<TopRatedTvsBloc>()..add(GetTopRatedTvsEvent()),
+        ),
+        BlocProvider(
+          create: (context) =>
+          di.locator<WatchlistMovieBloc>(),
         ),
       ],
       child: MaterialApp(

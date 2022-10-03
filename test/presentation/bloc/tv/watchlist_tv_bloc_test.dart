@@ -2,20 +2,20 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
 import 'package:ditonton/common/failure.dart';
 import 'package:ditonton/domain/entities/tv_series.dart';
-import 'package:ditonton/domain/usecases/get_top_rated_tvs.dart';
-import 'package:ditonton/presentation/bloc/tv/top_rated/top_rated_tvs_bloc.dart';
+import 'package:ditonton/domain/usecases/get_watchlist_tvs.dart';
+import 'package:ditonton/presentation/bloc/tv/watchlist/watchlist_tv_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'top_rated_tvs_bloc_test.mocks.dart';
+import 'watchlist_tv_bloc_test.mocks.dart';
 
-@GenerateMocks([GetTopRatedTvs])
+@GenerateMocks([GetWatchlistTvs])
 main() {
-  late MockGetTopRatedTvs mockGetTopRatedTvs;
+  late MockGetWatchlistTvs mockGetWatchlistTvs;
 
   setUp(() {
-    mockGetTopRatedTvs = MockGetTopRatedTvs();
+    mockGetWatchlistTvs = MockGetWatchlistTvs();
   });
 
   final tTv = TvSeries(
@@ -35,28 +35,28 @@ main() {
   );
   final tTvs = <TvSeries>[tTv];
 
-  group("TopRatedTvsBloc", () {
-    blocTest<TopRatedTvsBloc, TopRatedTvsState>(
+  group("WatchlistTvBloc", () {
+    blocTest<WatchlistTvBloc, WatchlistTvState>(
       "return list of tv series when success",
-      setUp: () => when(mockGetTopRatedTvs.execute())
+      setUp: () => when(mockGetWatchlistTvs.execute())
           .thenAnswer((_) async => Right(tTvs)),
-      build: () => TopRatedTvsBloc(mockGetTopRatedTvs),
-      act: (bloc) => bloc.add(GetTopRatedTvsEvent()),
+      build: () => WatchlistTvBloc(mockGetWatchlistTvs),
+      act: (bloc) => bloc.add(GetWatchlistTvEvent()),
       expect: () => [
-        TopRatedTvsLoading(),
-        TopRatedTvsSuccess(tTvs),
+        WatchlistTvLoading(),
+        WatchlistTvSuccess(tTvs),
       ],
     );
 
-    blocTest<TopRatedTvsBloc, TopRatedTvsState>(
+    blocTest<WatchlistTvBloc, WatchlistTvState>(
       "return message when error",
-      setUp: () => when(mockGetTopRatedTvs.execute())
+      setUp: () => when(mockGetWatchlistTvs.execute())
           .thenAnswer((_) async => Left(ServerFailure("error"))),
-      build: () => TopRatedTvsBloc(mockGetTopRatedTvs),
-      act: (bloc) => bloc.add(GetTopRatedTvsEvent()),
+      build: () => WatchlistTvBloc(mockGetWatchlistTvs),
+      act: (bloc) => bloc.add(GetWatchlistTvEvent()),
       expect: () => [
-        TopRatedTvsLoading(),
-        TopRatedTvsError("error"),
+        WatchlistTvLoading(),
+        WatchlistTvError("error"),
       ],
     );
   });

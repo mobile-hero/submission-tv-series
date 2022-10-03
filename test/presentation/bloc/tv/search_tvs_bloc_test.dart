@@ -39,7 +39,7 @@ main() {
 
   group("SearchMoviesBloc", () {
     blocTest<SearchMoviesBloc, SearchMoviesState>(
-      "return list of movie when searching success",
+      "return list of tv series when searching success",
       setUp: () => when(mockGetSearchMovies.execute(tQuery))
           .thenAnswer((_) async => Right(tMovieList)),
       build: () => SearchMoviesBloc(mockGetSearchMovies),

@@ -2,20 +2,20 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
 import 'package:ditonton/common/failure.dart';
 import 'package:ditonton/domain/entities/movie.dart';
-import 'package:ditonton/domain/usecases/get_top_rated_movies.dart';
-import 'package:ditonton/presentation/bloc/movie/top_rated/top_rated_movies_bloc.dart';
+import 'package:ditonton/domain/usecases/get_watchlist_movies.dart';
+import 'package:ditonton/presentation/bloc/movie/watchlist/watchlist_movie_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'top_rated_movies_bloc_test.mocks.dart';
+import 'watchlist_movie_bloc_test.mocks.dart';
 
-@GenerateMocks([GetTopRatedMovies])
+@GenerateMocks([GetWatchlistMovies])
 main() {
-  late MockGetTopRatedMovies mockGetTopRatedMovies;
+  late MockGetWatchlistMovies mockGetWatchlistMovies;
 
   setUp(() {
-    mockGetTopRatedMovies = MockGetTopRatedMovies();
+    mockGetWatchlistMovies = MockGetWatchlistMovies();
   });
 
   final tMovie = Movie(
@@ -36,28 +36,28 @@ main() {
 
   final tMovieList = <Movie>[tMovie];
 
-  group("TopRatedMoviesBloc", () {
-    blocTest<TopRatedMoviesBloc, TopRatedMoviesState>(
+  group("WatchlistMovieBloc", () {
+    blocTest<WatchlistMovieBloc, WatchlistMovieState>(
       "return list of movie when success",
-      setUp: () => when(mockGetTopRatedMovies.execute())
+      setUp: () => when(mockGetWatchlistMovies.execute())
           .thenAnswer((_) async => Right(tMovieList)),
-      build: () => TopRatedMoviesBloc(mockGetTopRatedMovies),
-      act: (bloc) => bloc.add(GetTopRatedMoviesEvent()),
+      build: () => WatchlistMovieBloc(mockGetWatchlistMovies),
+      act: (bloc) => bloc.add(GetWatchlistMovieEvent()),
       expect: () => [
-        TopRatedMoviesLoading(),
-        TopRatedMoviesSuccess(tMovieList),
+        WatchlistMovieLoading(),
+        WatchlistMovieSuccess(tMovieList),
       ],
     );
 
-    blocTest<TopRatedMoviesBloc, TopRatedMoviesState>(
+    blocTest<WatchlistMovieBloc, WatchlistMovieState>(
       "return message when error",
-      setUp: () => when(mockGetTopRatedMovies.execute())
+      setUp: () => when(mockGetWatchlistMovies.execute())
           .thenAnswer((_) async => Left(ServerFailure("error"))),
-      build: () => TopRatedMoviesBloc(mockGetTopRatedMovies),
-      act: (bloc) => bloc.add(GetTopRatedMoviesEvent()),
+      build: () => WatchlistMovieBloc(mockGetWatchlistMovies),
+      act: (bloc) => bloc.add(GetWatchlistMovieEvent()),
       expect: () => [
-        TopRatedMoviesLoading(),
-        TopRatedMoviesError("error"),
+        WatchlistMovieLoading(),
+        WatchlistMovieError("error"),
       ],
     );
   });

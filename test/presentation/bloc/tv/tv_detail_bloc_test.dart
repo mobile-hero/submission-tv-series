@@ -45,7 +45,7 @@ main() {
 
   group("TvDetailBloc", () {
     blocTest<TvDetailBloc, TvDetailState>(
-      "return list of movie when success",
+      "return detail of tv series when success",
       setUp: () {
         when(mockGetTvDetail.execute(tId))
             .thenAnswer((_) async => Right(testTvDetail));
@@ -61,7 +61,7 @@ main() {
     );
 
     blocTest<TvDetailBloc, TvDetailState>(
-      "return message when get movie detail error",
+      "return message when get tv detail error",
       setUp: () {
         when(mockGetTvDetail.execute(tId))
             .thenAnswer((_) async => Left(ServerFailure("error")));

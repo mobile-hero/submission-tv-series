@@ -1,121 +1,121 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
-import 'package:ditonton/domain/usecases/get_watchlist_status.dart';
-import 'package:ditonton/domain/usecases/remove_watchlist.dart';
-import 'package:ditonton/domain/usecases/save_watchlist.dart';
-import 'package:ditonton/presentation/bloc/movie/watchlist/watchlist_movie_manager_bloc.dart';
+import 'package:ditonton/domain/usecases/get_watchlist_tv_status.dart';
+import 'package:ditonton/domain/usecases/tv_remove_watchlist.dart';
+import 'package:ditonton/domain/usecases/tv_save_watchlist.dart';
+import 'package:ditonton/presentation/bloc/tv/watchlist/watchlist_tv_manager_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import '../../../dummy_data/dummy_objects.dart';
-import '../movie/watchlist_movie_manager_bloc_test.mocks.dart';
+import '../../../dummy_data/dummy_objects_tv.dart';
+import 'watchlist_tv_manager_bloc_test.mocks.dart';
 
-@GenerateMocks([GetWatchListStatus, SaveWatchlist, RemoveWatchlist])
+@GenerateMocks([GetWatchListTvStatus, TvSaveWatchlist, TvRemoveWatchlist])
 main() {
-  late MockGetWatchListStatus mockGetWatchlistStatus;
-  late MockSaveWatchlist mockSaveWatchlist;
-  late MockRemoveWatchlist mockRemoveWatchlist;
+  late MockGetWatchListTvStatus mockGetWatchlistTvStatus;
+  late MockTvSaveWatchlist mockTvSaveWatchlist;
+  late MockTvRemoveWatchlist mockTvRemoveWatchlist;
 
   setUp(() {
-    mockGetWatchlistStatus = MockGetWatchListStatus();
-    mockSaveWatchlist = MockSaveWatchlist();
-    mockRemoveWatchlist = MockRemoveWatchlist();
+    mockGetWatchlistTvStatus = MockGetWatchListTvStatus();
+    mockTvSaveWatchlist = MockTvSaveWatchlist();
+    mockTvRemoveWatchlist = MockTvRemoveWatchlist();
   });
 
   final int tId = 1;
 
-  group("WatchlistMovieManagerBloc", () {
-    blocTest<WatchlistMovieManagerBloc, WatchlistMovieManagerState>(
-      "should get watchlist status from of a movie",
-      setUp: () => when(mockGetWatchlistStatus.execute(tId))
+  group("WatchlistTvManagerBloc", () {
+    blocTest<WatchlistTvManagerBloc, WatchlistTvManagerState>(
+      "should get watchlist status from of a tv series",
+      setUp: () => when(mockGetWatchlistTvStatus.execute(tId))
           .thenAnswer((_) async => true),
-      build: () => WatchlistMovieManagerBloc(
-          mockGetWatchlistStatus, mockSaveWatchlist, mockRemoveWatchlist),
+      build: () => WatchlistTvManagerBloc(
+          mockGetWatchlistTvStatus, mockTvSaveWatchlist, mockTvRemoveWatchlist),
       act: (bloc) => bloc.add(RefreshWatchlistStatus(tId)),
-      expect: () => [
-        WatchlistMovieManagerLoading(),
-        WatchlistMovieManagerSuccess(true, null)
-      ],
+      expect: () =>
+          [WatchlistTvManagerLoading(), WatchlistTvManagerSuccess(true, null)],
     );
 
-    blocTest<WatchlistMovieManagerBloc, WatchlistMovieManagerState>(
+    blocTest<WatchlistTvManagerBloc, WatchlistTvManagerState>(
       "should change watchlist status to true",
       setUp: () {
-        when(mockSaveWatchlist.execute(testMovieDetail)).thenAnswer((_) async =>
-            Right(WatchlistMovieManagerBloc.watchlistAddSuccessMessage));
-        when(mockGetWatchlistStatus.execute(tId)).thenAnswer((_) async => true);
+        when(mockTvSaveWatchlist.execute(testTvDetail)).thenAnswer((_) async =>
+            Right(WatchlistTvManagerBloc.watchlistAddSuccessMessage));
+        when(mockGetWatchlistTvStatus.execute(tId))
+            .thenAnswer((_) async => true);
       },
-      build: () => WatchlistMovieManagerBloc(
-          mockGetWatchlistStatus, mockSaveWatchlist, mockRemoveWatchlist),
-      act: (bloc) => bloc.add(AddToWatchlist(testMovieDetail)),
+      build: () => WatchlistTvManagerBloc(
+          mockGetWatchlistTvStatus, mockTvSaveWatchlist, mockTvRemoveWatchlist),
+      act: (bloc) => bloc.add(AddToWatchlist(testTvDetail)),
       expect: () => [
-        WatchlistMovieManagerLoading(),
-        WatchlistMovieManagerSuccess(
-            true, WatchlistMovieManagerBloc.watchlistAddSuccessMessage),
+        WatchlistTvManagerLoading(),
+        WatchlistTvManagerSuccess(
+            true, WatchlistTvManagerBloc.watchlistAddSuccessMessage),
       ],
     );
 
-    blocTest<WatchlistMovieManagerBloc, WatchlistMovieManagerState>(
+    blocTest<WatchlistTvManagerBloc, WatchlistTvManagerState>(
       "should change watchlist status to false",
       setUp: () {
-        when(mockRemoveWatchlist.execute(testMovieDetail)).thenAnswer(
+        when(mockTvRemoveWatchlist.execute(testTvDetail)).thenAnswer(
             (_) async =>
-                Right(WatchlistMovieManagerBloc.watchlistRemoveSuccessMessage));
-        when(mockGetWatchlistStatus.execute(tId))
+                Right(WatchlistTvManagerBloc.watchlistRemoveSuccessMessage));
+        when(mockGetWatchlistTvStatus.execute(tId))
             .thenAnswer((_) async => false);
       },
-      build: () => WatchlistMovieManagerBloc(
-          mockGetWatchlistStatus, mockSaveWatchlist, mockRemoveWatchlist),
-      act: (bloc) => bloc.add(RemoveFromWatchlist(testMovieDetail)),
+      build: () => WatchlistTvManagerBloc(
+          mockGetWatchlistTvStatus, mockTvSaveWatchlist, mockTvRemoveWatchlist),
+      act: (bloc) => bloc.add(RemoveFromWatchlist(testTvDetail)),
       expect: () => [
-        WatchlistMovieManagerLoading(),
-        WatchlistMovieManagerSuccess(
-            false, WatchlistMovieManagerBloc.watchlistRemoveSuccessMessage),
+        WatchlistTvManagerLoading(),
+        WatchlistTvManagerSuccess(
+            false, WatchlistTvManagerBloc.watchlistRemoveSuccessMessage),
       ],
     );
 
-    blocTest<WatchlistMovieManagerBloc, WatchlistMovieManagerState>(
+    blocTest<WatchlistTvManagerBloc, WatchlistTvManagerState>(
       "should toggle watchlist status from false to true",
       setUp: () {
-        when(mockSaveWatchlist.execute(testMovieDetail)).thenAnswer((_) async =>
-            Right(WatchlistMovieManagerBloc.watchlistAddSuccessMessage));
-        when(mockGetWatchlistStatus.execute(tId)).thenAnswer((_) async => true);
+        when(mockTvSaveWatchlist.execute(testTvDetail)).thenAnswer((_) async =>
+            Right(WatchlistTvManagerBloc.watchlistAddSuccessMessage));
+        when(mockGetWatchlistTvStatus.execute(tId))
+            .thenAnswer((_) async => true);
       },
       build: () {
-        final bloc = WatchlistMovieManagerBloc(
-            mockGetWatchlistStatus, mockSaveWatchlist, mockRemoveWatchlist);
+        final bloc = WatchlistTvManagerBloc(mockGetWatchlistTvStatus,
+            mockTvSaveWatchlist, mockTvRemoveWatchlist);
         bloc.isAddedToWatchlist = false;
         return bloc;
       },
-      act: (bloc) => bloc.add(ToggleWatchlist(testMovieDetail)),
+      act: (bloc) => bloc.add(ToggleWatchlist(testTvDetail)),
       expect: () => [
-        WatchlistMovieManagerLoading(),
-        WatchlistMovieManagerSuccess(
-            true, WatchlistMovieManagerBloc.watchlistAddSuccessMessage),
+        WatchlistTvManagerLoading(),
+        WatchlistTvManagerSuccess(
+            true, WatchlistTvManagerBloc.watchlistAddSuccessMessage),
       ],
     );
 
-    blocTest<WatchlistMovieManagerBloc, WatchlistMovieManagerState>(
+    blocTest<WatchlistTvManagerBloc, WatchlistTvManagerState>(
       "should toggle watchlist status from true to false",
       setUp: () {
-        when(mockRemoveWatchlist.execute(testMovieDetail)).thenAnswer(
+        when(mockTvRemoveWatchlist.execute(testTvDetail)).thenAnswer(
             (_) async =>
-                Right(WatchlistMovieManagerBloc.watchlistRemoveSuccessMessage));
-        when(mockGetWatchlistStatus.execute(tId))
+                Right(WatchlistTvManagerBloc.watchlistRemoveSuccessMessage));
+        when(mockGetWatchlistTvStatus.execute(tId))
             .thenAnswer((_) async => false);
       },
       build: () {
-        final bloc = WatchlistMovieManagerBloc(
-            mockGetWatchlistStatus, mockSaveWatchlist, mockRemoveWatchlist);
+        final bloc = WatchlistTvManagerBloc(mockGetWatchlistTvStatus,
+            mockTvSaveWatchlist, mockTvRemoveWatchlist);
         bloc.isAddedToWatchlist = true;
         return bloc;
       },
-      act: (bloc) => bloc.add(ToggleWatchlist(testMovieDetail)),
+      act: (bloc) => bloc.add(ToggleWatchlist(testTvDetail)),
       expect: () => [
-        WatchlistMovieManagerLoading(),
-        WatchlistMovieManagerSuccess(
-            false, WatchlistMovieManagerBloc.watchlistRemoveSuccessMessage),
+        WatchlistTvManagerLoading(),
+        WatchlistTvManagerSuccess(
+            false, WatchlistTvManagerBloc.watchlistRemoveSuccessMessage),
       ],
     );
   });

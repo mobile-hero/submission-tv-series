@@ -13,6 +13,7 @@ import 'package:ditonton/presentation/bloc/movie/now_playing/now_playing_movies_
 import 'package:ditonton/presentation/bloc/movie/popular/popular_movies_bloc.dart';
 import 'package:ditonton/presentation/bloc/movie/search/search_movies_bloc.dart';
 import 'package:ditonton/presentation/bloc/movie/top_rated/top_rated_movies_bloc.dart';
+import 'package:ditonton/presentation/bloc/movie/watchlist/watchlist_movie_bloc.dart';
 import 'package:ditonton/presentation/bloc/movie/watchlist/watchlist_movie_manager_bloc.dart';
 import 'package:ditonton/presentation/bloc/tv/detail/tv_detail_bloc.dart';
 import 'package:ditonton/presentation/bloc/tv/episodes/tv_episodes_bloc.dart';
@@ -20,6 +21,7 @@ import 'package:ditonton/presentation/bloc/tv/now_playing/now_playing_tvs_bloc.d
 import 'package:ditonton/presentation/bloc/tv/popular/popular_tvs_bloc.dart';
 import 'package:ditonton/presentation/bloc/tv/search/search_tvs_bloc.dart';
 import 'package:ditonton/presentation/bloc/tv/top_rated/top_rated_tvs_bloc.dart';
+import 'package:ditonton/presentation/bloc/tv/watchlist/watchlist_tv_bloc.dart';
 import 'package:ditonton/presentation/bloc/tv/watchlist/watchlist_tv_manager_bloc.dart';
 import 'package:ditonton/presentation/provider/providers.dart';
 import 'package:flutter/foundation.dart';
@@ -46,6 +48,8 @@ Future<void> init() async {
   locator.registerFactory(
       () => WatchlistTvManagerBloc(locator(), locator(), locator()));
   locator.registerFactory(() => TvEpisodesBloc(locator()));
+  locator.registerFactory(() => WatchlistMovieBloc(locator()));
+  locator.registerFactory(() => WatchlistTvBloc(locator()));
 
   locator.registerFactory(
     () => MovieListNotifier(
