@@ -1,12 +1,37 @@
-import 'package:ditonton/injection.dart' as di;
+import 'package:ditonton/injection.dart';
+import 'package:ditonton/presentation/bloc/tv/episodes/tv_episodes_bloc.dart';
 import 'package:ditonton/presentation/widgets/episode_card.dart';
 import 'package:ditonton/presentation/widgets/my_progress_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../common/state_enum.dart';
-import '../provider/tv_episodes_notifier.dart';
 import '../widgets/error_message_container.dart';
+
+class TvEpisodesProviderPage extends StatelessWidget {
+  final int movieId;
+  final int seasonNumber;
+  final String seasonName;
+
+  const TvEpisodesProviderPage({
+    Key? key,
+    required this.movieId,
+    required this.seasonNumber,
+    required this.seasonName,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => locator.get<TvEpisodesBloc>()
+        ..add(GetEpisodesEvent(movieId, seasonNumber)),
+      child: TvEpisodesPage(
+        movieId: movieId,
+        seasonNumber: seasonNumber,
+        seasonName: seasonName,
+      ),
+    );
+  }
+}
 
 class TvEpisodesPage extends StatefulWidget {
   static const ROUTE_NAME = "/episodes";
@@ -30,10 +55,6 @@ class _TvEpisodesPageState extends State<TvEpisodesPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() {
-      Provider.of<TvEpisodesNotifier>(context, listen: false)
-          .fetchSeasonEpisodes(widget.movieId, widget.seasonNumber);
-    });
   }
 
   @override
@@ -42,16 +63,16 @@ class _TvEpisodesPageState extends State<TvEpisodesPage> {
       appBar: AppBar(
         title: Text('Episodes from ${widget.seasonName}'),
       ),
-      body: Consumer<TvEpisodesNotifier>(
-        builder: (context, provider, child) {
-          if (provider.seasonState == RequestState.Loading) {
+      body: BlocBuilder<TvEpisodesBloc, TvEpisodesState>(
+        builder: (context, state) {
+          if (state is TvEpisodesLoading) {
             return MyProgressIndicator();
-          } else if (provider.seasonState == RequestState.Loaded) {
+          } else if (state is TvEpisodesSuccess) {
             return SafeArea(
               child: ListView.builder(
-                itemCount: provider.seasonEpisodes.length,
+                itemCount: state.source.length,
                 itemBuilder: (context, position) {
-                  final item = provider.seasonEpisodes[position];
+                  final item = state.source[position];
                   return EpisodeCard(
                     key: ValueKey(item.episodeNumber),
                     episode: item,
@@ -59,8 +80,10 @@ class _TvEpisodesPageState extends State<TvEpisodesPage> {
                 },
               ),
             );
+          } else if (state is TvEpisodesError) {
+            return ErrorMessageContainer(message: state.message);
           } else {
-            return ErrorMessageContainer(message: provider.message);
+            return SizedBox.shrink();
           }
         },
       ),

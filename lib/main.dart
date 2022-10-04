@@ -4,14 +4,21 @@ import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/common/utils.dart';
 import 'package:ditonton/firebase_options.dart';
 import 'package:ditonton/injection.dart' as di;
+import 'package:ditonton/presentation/bloc/movie/watchlist/watchlist_movie_bloc.dart';
+import 'package:ditonton/presentation/bloc/tv/watchlist/watchlist_tv_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'presentation/bloc/movie/now_playing/now_playing_movies_bloc.dart';
+import 'presentation/bloc/movie/popular/popular_movies_bloc.dart';
+import 'presentation/bloc/movie/top_rated/top_rated_movies_bloc.dart';
+import 'presentation/bloc/tv/now_playing/now_playing_tvs_bloc.dart';
+import 'presentation/bloc/tv/popular/popular_tvs_bloc.dart';
+import 'presentation/bloc/tv/top_rated/top_rated_tvs_bloc.dart';
 import 'presentation/pages/pages.dart';
-import 'presentation/provider/providers.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,46 +39,37 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
+    return MultiBlocProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (_) => di.locator<MovieListNotifier>(),
+        BlocProvider(
+          create: (context) =>
+              di.locator<NowPlayingMoviesBloc>()..add(GetNowPlayingEvent()),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<MovieDetailNotifier>(),
+        BlocProvider(
+          create: (context) =>
+              di.locator<PopularMoviesBloc>()..add(GetPopularMoviesEvent()),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<MovieSearchNotifier>(),
+        BlocProvider(
+          create: (context) =>
+              di.locator<TopRatedMoviesBloc>()..add(GetTopRatedMoviesEvent()),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TopRatedMoviesNotifier>(),
+        BlocProvider(
+          create: (context) =>
+              di.locator<NowPlayingTvsBloc>()..add(GetNowPlayingTvsEvent()),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<PopularMoviesNotifier>(),
+        BlocProvider(
+          create: (context) =>
+              di.locator<PopularTvsBloc>()..add(GetPopularTvsEvent()),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<WatchlistMovieNotifier>(),
+        BlocProvider(
+          create: (context) =>
+              di.locator<TopRatedTvsBloc>()..add(GetTopRatedTvsEvent()),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TvListNotifier>(),
+        BlocProvider(
+          create: (context) => di.locator<WatchlistMovieBloc>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TvDetailNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TvEpisodesNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TvSearchNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TopRatedTvsNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<PopularTvsNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<WatchlistTvNotifier>(),
+        BlocProvider(
+          create: (context) => di.locator<WatchlistTvBloc>(),
         ),
       ],
       child: MaterialApp(
@@ -95,7 +93,7 @@ class MyApp extends StatelessWidget {
             case MovieDetailPage.ROUTE_NAME:
               final id = settings.arguments as int;
               return MaterialPageRoute(
-                builder: (_) => MovieDetailPage(id: id),
+                builder: (_) => MovieDetailProviderPage(id: id),
                 settings: settings,
               );
             case SearchPage.ROUTE_NAME:
@@ -109,7 +107,7 @@ class MyApp extends StatelessWidget {
             case TvDetailPage.ROUTE_NAME:
               final id = settings.arguments as int;
               return MaterialPageRoute(
-                builder: (_) => TvDetailPage(id: id),
+                builder: (_) => TvDetailProviderPage(id: id),
                 settings: settings,
               );
             case TvEpisodesPage.ROUTE_NAME:
@@ -118,7 +116,7 @@ class MyApp extends StatelessWidget {
               final seasonNumber = map['seasonNumber'];
               final seasonName = map['seasonName'];
               return MaterialPageRoute(
-                builder: (_) => TvEpisodesPage(
+                builder: (_) => TvEpisodesProviderPage(
                     movieId: movieId,
                     seasonNumber: seasonNumber,
                     seasonName: seasonName),

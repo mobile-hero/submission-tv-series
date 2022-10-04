@@ -1,10 +1,9 @@
-import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/presentation/provider/popular_tvs_notifier.dart';
+import 'package:ditonton/presentation/bloc/tv/popular/popular_tvs_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../widgets/tv_list.dart';
 import '../widgets/widgets.dart';
-
 
 class PopularTvsPage extends StatefulWidget {
   static const ROUTE_NAME = '/popular-tv';
@@ -17,9 +16,6 @@ class _PopularTvsPageState extends State<PopularTvsPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() =>
-        Provider.of<PopularTvsNotifier>(context, listen: false)
-            .fetchPopularTvs());
   }
 
   @override
@@ -30,14 +26,16 @@ class _PopularTvsPageState extends State<PopularTvsPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<PopularTvsNotifier>(
-          builder: (context, data, child) {
-            if (data.state == RequestState.Loading) {
+        child: BlocBuilder<PopularTvsBloc, PopularTvsState>(
+          builder: (context, state) {
+            if (state is PopularTvsLoading) {
               return MyProgressIndicator();
-            } else if (data.state == RequestState.Loaded) {
-              return TvList(movies: data.movies);
+            } else if (state is PopularTvsSuccess) {
+              return TvList(movies: state.source);
+            } else if (state is PopularTvsError) {
+              return ErrorMessageContainer(message: state.message);
             } else {
-              return ErrorMessageContainer(message: data.message);
+              return SizedBox.shrink();
             }
           },
         ),

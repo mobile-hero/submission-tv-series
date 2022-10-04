@@ -2,13 +2,11 @@
 // in ditonton/test/presentation/pages/tv_episodes_page_test.dart.
 // Do not manually edit this file.
 
-import 'dart:async' as _i6;
-import 'dart:ui' as _i7;
+import 'dart:async' as _i4;
 
-import 'package:ditonton/common/state_enum.dart' as _i5;
-import 'package:ditonton/domain/entities/episode.dart' as _i4;
+import 'package:bloc/bloc.dart' as _i5;
 import 'package:ditonton/domain/usecases/get_season_episodes.dart' as _i2;
-import 'package:ditonton/presentation/provider/tv_episodes_notifier.dart'
+import 'package:ditonton/presentation/bloc/tv/episodes/tv_episodes_bloc.dart'
     as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -25,12 +23,13 @@ import 'package:mockito/mockito.dart' as _i1;
 class _FakeGetSeasonEpisodes_0 extends _i1.Fake
     implements _i2.GetSeasonEpisodes {}
 
-/// A class which mocks [TvEpisodesNotifier].
+class _FakeTvEpisodesState_1 extends _i1.Fake implements _i3.TvEpisodesState {}
+
+/// A class which mocks [TvEpisodesBloc].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockTvEpisodesNotifier extends _i1.Mock
-    implements _i3.TvEpisodesNotifier {
-  MockTvEpisodesNotifier() {
+class MockTvEpisodesBloc extends _i1.Mock implements _i3.TvEpisodesBloc {
+  MockTvEpisodesBloc() {
     _i1.throwOnMissingStub(this);
   }
 
@@ -39,39 +38,57 @@ class MockTvEpisodesNotifier extends _i1.Mock
       (super.noSuchMethod(Invocation.getter(#getSeasonEpisodes),
           returnValue: _FakeGetSeasonEpisodes_0()) as _i2.GetSeasonEpisodes);
   @override
-  List<_i4.Episode> get seasonEpisodes =>
-      (super.noSuchMethod(Invocation.getter(#seasonEpisodes),
-          returnValue: <_i4.Episode>[]) as List<_i4.Episode>);
+  _i3.TvEpisodesState get state =>
+      (super.noSuchMethod(Invocation.getter(#state),
+          returnValue: _FakeTvEpisodesState_1()) as _i3.TvEpisodesState);
   @override
-  _i5.RequestState get seasonState =>
-      (super.noSuchMethod(Invocation.getter(#seasonState),
-          returnValue: _i5.RequestState.Empty) as _i5.RequestState);
+  _i4.Stream<_i3.TvEpisodesState> get stream =>
+      (super.noSuchMethod(Invocation.getter(#stream),
+              returnValue: Stream<_i3.TvEpisodesState>.empty())
+          as _i4.Stream<_i3.TvEpisodesState>);
   @override
-  String get message =>
-      (super.noSuchMethod(Invocation.getter(#message), returnValue: '')
-          as String);
-  @override
-  bool get hasListeners =>
-      (super.noSuchMethod(Invocation.getter(#hasListeners), returnValue: false)
+  bool get isClosed =>
+      (super.noSuchMethod(Invocation.getter(#isClosed), returnValue: false)
           as bool);
   @override
-  _i6.Future<void> fetchSeasonEpisodes(int? id, int? seasonNumber) => (super
-      .noSuchMethod(Invocation.method(#fetchSeasonEpisodes, [id, seasonNumber]),
-          returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future<void>.value()) as _i6.Future<void>);
-  @override
-  void addListener(_i7.VoidCallback? listener) =>
-      super.noSuchMethod(Invocation.method(#addListener, [listener]),
+  void add(_i3.TvEpisodesEvent? event) =>
+      super.noSuchMethod(Invocation.method(#add, [event]),
           returnValueForMissingStub: null);
   @override
-  void removeListener(_i7.VoidCallback? listener) =>
-      super.noSuchMethod(Invocation.method(#removeListener, [listener]),
+  void onEvent(_i3.TvEpisodesEvent? event) =>
+      super.noSuchMethod(Invocation.method(#onEvent, [event]),
           returnValueForMissingStub: null);
   @override
-  void dispose() => super.noSuchMethod(Invocation.method(#dispose, []),
-      returnValueForMissingStub: null);
+  void emit(_i3.TvEpisodesState? state) =>
+      super.noSuchMethod(Invocation.method(#emit, [state]),
+          returnValueForMissingStub: null);
   @override
-  void notifyListeners() =>
-      super.noSuchMethod(Invocation.method(#notifyListeners, []),
+  void on<E extends _i3.TvEpisodesEvent>(
+          _i5.EventHandler<E, _i3.TvEpisodesState>? handler,
+          {_i5.EventTransformer<E>? transformer}) =>
+      super.noSuchMethod(
+          Invocation.method(#on, [handler], {#transformer: transformer}),
+          returnValueForMissingStub: null);
+  @override
+  void onTransition(
+          _i5.Transition<_i3.TvEpisodesEvent, _i3.TvEpisodesState>?
+              transition) =>
+      super.noSuchMethod(Invocation.method(#onTransition, [transition]),
+          returnValueForMissingStub: null);
+  @override
+  _i4.Future<void> close() => (super.noSuchMethod(Invocation.method(#close, []),
+      returnValue: Future<void>.value(),
+      returnValueForMissingStub: Future<void>.value()) as _i4.Future<void>);
+  @override
+  void onChange(_i5.Change<_i3.TvEpisodesState>? change) =>
+      super.noSuchMethod(Invocation.method(#onChange, [change]),
+          returnValueForMissingStub: null);
+  @override
+  void addError(Object? error, [StackTrace? stackTrace]) =>
+      super.noSuchMethod(Invocation.method(#addError, [error, stackTrace]),
+          returnValueForMissingStub: null);
+  @override
+  void onError(Object? error, StackTrace? stackTrace) =>
+      super.noSuchMethod(Invocation.method(#onError, [error, stackTrace]),
           returnValueForMissingStub: null);
 }

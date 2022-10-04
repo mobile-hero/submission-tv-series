@@ -1,9 +1,8 @@
-import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/presentation/provider/top_rated_tvs_notifier.dart';
-import 'package:ditonton/presentation/widgets/movie_card_list.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../bloc/tv/top_rated/top_rated_tvs_bloc.dart';
+import '../widgets/tv_list.dart';
 import '../widgets/widgets.dart';
 
 class TopRatedTvsPage extends StatefulWidget {
@@ -17,9 +16,6 @@ class _TopRatedTvsPageState extends State<TopRatedTvsPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() =>
-        Provider.of<TopRatedTvsNotifier>(context, listen: false)
-            .fetchTopRatedTvs());
   }
 
   @override
@@ -30,14 +26,16 @@ class _TopRatedTvsPageState extends State<TopRatedTvsPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<TopRatedTvsNotifier>(
-          builder: (context, data, child) {
-            if (data.state == RequestState.Loading) {
+        child: BlocBuilder<TopRatedTvsBloc, TopRatedTvsState>(
+          builder: (context, state) {
+            if (state is TopRatedTvsLoading) {
               return MyProgressIndicator();
-            } else if (data.state == RequestState.Loaded) {
-              return TvList(movies: data.movies);
+            } else if (state is TopRatedTvsSuccess) {
+              return TvList(movies: state.source);
+            } else if (state is TopRatedTvsError) {
+              return ErrorMessageContainer(message: state.message);
             } else {
-              return ErrorMessageContainer(message: data.message);
+              return SizedBox.shrink();
             }
           },
         ),

@@ -8,6 +8,21 @@ import 'package:ditonton/data/repositories/tv_repository_impl.dart';
 import 'package:ditonton/domain/repositories/movie_repository.dart';
 import 'package:ditonton/domain/repositories/tv_repository.dart';
 import 'package:ditonton/domain/usecases/usecases.dart';
+import 'package:ditonton/presentation/bloc/movie/detail/movie_detail_bloc.dart';
+import 'package:ditonton/presentation/bloc/movie/now_playing/now_playing_movies_bloc.dart';
+import 'package:ditonton/presentation/bloc/movie/popular/popular_movies_bloc.dart';
+import 'package:ditonton/presentation/bloc/movie/search/search_movies_bloc.dart';
+import 'package:ditonton/presentation/bloc/movie/top_rated/top_rated_movies_bloc.dart';
+import 'package:ditonton/presentation/bloc/movie/watchlist/watchlist_movie_bloc.dart';
+import 'package:ditonton/presentation/bloc/movie/watchlist/watchlist_movie_manager_bloc.dart';
+import 'package:ditonton/presentation/bloc/tv/detail/tv_detail_bloc.dart';
+import 'package:ditonton/presentation/bloc/tv/episodes/tv_episodes_bloc.dart';
+import 'package:ditonton/presentation/bloc/tv/now_playing/now_playing_tvs_bloc.dart';
+import 'package:ditonton/presentation/bloc/tv/popular/popular_tvs_bloc.dart';
+import 'package:ditonton/presentation/bloc/tv/search/search_tvs_bloc.dart';
+import 'package:ditonton/presentation/bloc/tv/top_rated/top_rated_tvs_bloc.dart';
+import 'package:ditonton/presentation/bloc/tv/watchlist/watchlist_tv_bloc.dart';
+import 'package:ditonton/presentation/bloc/tv/watchlist/watchlist_tv_manager_bloc.dart';
 import 'package:ditonton/presentation/provider/providers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -18,6 +33,24 @@ final locator = GetIt.instance;
 
 Future<void> init() async {
   // provider
+  locator.registerFactory(() => NowPlayingMoviesBloc(locator()));
+  locator.registerFactory(() => PopularMoviesBloc(locator()));
+  locator.registerFactory(() => TopRatedMoviesBloc(locator()));
+  locator.registerFactory(() => NowPlayingTvsBloc(locator()));
+  locator.registerFactory(() => PopularTvsBloc(locator()));
+  locator.registerFactory(() => TopRatedTvsBloc(locator()));
+  locator.registerFactory(() => SearchMoviesBloc(locator()));
+  locator.registerFactory(() => SearchTvsBloc(locator()));
+  locator.registerFactory(() => MovieDetailBloc(locator(), locator()));
+  locator.registerFactory(
+      () => WatchlistMovieManagerBloc(locator(), locator(), locator()));
+  locator.registerFactory(() => TvDetailBloc(locator(), locator()));
+  locator.registerFactory(
+      () => WatchlistTvManagerBloc(locator(), locator(), locator()));
+  locator.registerFactory(() => TvEpisodesBloc(locator()));
+  locator.registerFactory(() => WatchlistMovieBloc(locator()));
+  locator.registerFactory(() => WatchlistTvBloc(locator()));
+
   locator.registerFactory(
     () => MovieListNotifier(
       getNowPlayingMovies: locator(),
