@@ -1,17 +1,27 @@
 part of 'tv_episodes_bloc.dart';
 
 @immutable
-abstract class TvEpisodesState {}
+abstract class TvEpisodesState extends CommonEquatableState {}
 
 class TvEpisodesInitial extends TvEpisodesState {}
 
 class TvEpisodesLoading extends TvEpisodesState {}
 
-class TvEpisodesSuccess extends CommonSuccessState<List<Episode>>
-    with TvEpisodesState {
-  TvEpisodesSuccess(List<Episode> source) : super(source);
+class TvEpisodesSuccess extends TvEpisodesState
+    implements CommonSuccessState<List<Episode>> {
+  final List<Episode> source;
+
+  TvEpisodesSuccess(this.source);
+
+  @override
+  List<Object?> get props => [source];
 }
 
-class TvEpisodesError extends CommonErrorState with TvEpisodesState {
-  TvEpisodesError(String message) : super(message);
+class TvEpisodesError extends TvEpisodesState implements CommonErrorState {
+  final String message;
+
+  TvEpisodesError(this.message);
+
+  @override
+  List<Object?> get props => [message];
 }

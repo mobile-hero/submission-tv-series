@@ -93,7 +93,7 @@ class MyApp extends StatelessWidget {
             case MovieDetailPage.ROUTE_NAME:
               final id = settings.arguments as int;
               return MaterialPageRoute(
-                builder: (_) => MovieDetailPage(id: id),
+                builder: (_) => MovieDetailProviderPage(id: id),
                 settings: settings,
               );
             case SearchPage.ROUTE_NAME:
@@ -107,7 +107,7 @@ class MyApp extends StatelessWidget {
             case TvDetailPage.ROUTE_NAME:
               final id = settings.arguments as int;
               return MaterialPageRoute(
-                builder: (_) => TvDetailPage(id: id),
+                builder: (_) => TvDetailProviderPage(id: id),
                 settings: settings,
               );
             case TvEpisodesPage.ROUTE_NAME:

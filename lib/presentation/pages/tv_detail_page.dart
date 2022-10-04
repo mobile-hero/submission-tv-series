@@ -15,6 +15,29 @@ import '../widgets/error_message_container.dart';
 import '../widgets/my_progress_indicator.dart';
 import 'tv_episodes_page.dart';
 
+class TvDetailProviderPage extends StatelessWidget {
+  final int id;
+
+  const TvDetailProviderPage({Key? key, required this.id}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) =>
+              locator.get<TvDetailBloc>()..add(GetTvDetailEvent(id)),
+        ),
+        BlocProvider(
+          create: (context) => locator.get<WatchlistTvManagerBloc>()
+            ..add(RefreshWatchlistStatus(id)),
+        ),
+      ],
+      child: Container(),
+    );
+  }
+}
+
 class TvDetailPage extends StatefulWidget {
   static const ROUTE_NAME = '/detail-tv';
 
@@ -34,36 +57,24 @@ class _TvDetailPageState extends State<TvDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) =>
-              locator.get<TvDetailBloc>()..add(GetTvDetailEvent(widget.id)),
-        ),
-        BlocProvider(
-          create: (context) => locator.get<WatchlistTvManagerBloc>()
-            ..add(RefreshWatchlistStatus(widget.id)),
-        ),
-      ],
-      child: Scaffold(
-        body: BlocBuilder<TvDetailBloc, TvDetailState>(
-          builder: (context, state) {
-            if (state is TvDetailLoading) {
-              return MyProgressIndicator();
-            } else if (state is TvDetailSuccess) {
-              return SafeArea(
-                child: _DetailContent(
-                  state.source.detail,
-                  state.source.recommendations,
-                ),
-              );
-            } else if (state is TvDetailError) {
-              return ErrorMessageContainer(message: state.message);
-            } else {
-              return SizedBox.shrink();
-            }
-          },
-        ),
+    return Scaffold(
+      body: BlocBuilder<TvDetailBloc, TvDetailState>(
+        builder: (context, state) {
+          if (state is TvDetailLoading) {
+            return MyProgressIndicator();
+          } else if (state is TvDetailSuccess) {
+            return SafeArea(
+              child: _DetailContent(
+                state.source.detail,
+                state.source.recommendations,
+              ),
+            );
+          } else if (state is TvDetailError) {
+            return ErrorMessageContainer(message: state.message);
+          } else {
+            return SizedBox.shrink();
+          }
+        },
       ),
     );
   }

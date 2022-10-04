@@ -13,6 +13,29 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../../injection.dart';
 
+class MovieDetailProviderPage extends StatelessWidget {
+  final int id;
+
+  const MovieDetailProviderPage({Key? key, required this.id}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => locator.get<MovieDetailBloc>()
+            ..add(GetMovieDetailEvent(id)),
+        ),
+        BlocProvider(
+          create: (context) => locator.get<WatchlistMovieManagerBloc>()
+            ..add(RefreshWatchlistStatus(id)),
+        ),
+      ],
+      child: MovieDetailPage(id: id),
+    );
+  }
+}
+
 class MovieDetailPage extends StatefulWidget {
   static const ROUTE_NAME = '/detail';
 
@@ -32,36 +55,24 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => locator.get<MovieDetailBloc>()
-            ..add(GetMovieDetailEvent(widget.id)),
-        ),
-        BlocProvider(
-          create: (context) => locator.get<WatchlistMovieManagerBloc>()
-            ..add(RefreshWatchlistStatus(widget.id)),
-        ),
-      ],
-      child: Scaffold(
-        body: BlocBuilder<MovieDetailBloc, MovieDetailState>(
-          builder: (context, state) {
-            if (state is MovieDetailLoading) {
-              return MyProgressIndicator();
-            } else if (state is MovieDetailSuccess) {
-              return SafeArea(
-                child: _DetailContent(
-                  state.source.detail,
-                  state.source.recommendations,
-                ),
-              );
-            } else if (state is MovieDetailError) {
-              return ErrorMessageContainer(message: state.message);
-            } else {
-              return SizedBox.shrink();
-            }
-          },
-        ),
+    return Scaffold(
+      body: BlocBuilder<MovieDetailBloc, MovieDetailState>(
+        builder: (context, state) {
+          if (state is MovieDetailLoading) {
+            return MyProgressIndicator();
+          } else if (state is MovieDetailSuccess) {
+            return SafeArea(
+              child: _DetailContent(
+                state.source.detail,
+                state.source.recommendations,
+              ),
+            );
+          } else if (state is MovieDetailError) {
+            return ErrorMessageContainer(message: state.message);
+          } else {
+            return SizedBox.shrink();
+          }
+        },
       ),
     );
   }

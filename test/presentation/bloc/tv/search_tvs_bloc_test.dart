@@ -1,64 +1,64 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
 import 'package:ditonton/common/failure.dart';
-import 'package:ditonton/domain/entities/movie.dart';
-import 'package:ditonton/domain/usecases/search_movies.dart';
-import 'package:ditonton/presentation/bloc/movie/search/search_movies_bloc.dart';
+import 'package:ditonton/domain/entities/tv_series.dart';
+import 'package:ditonton/domain/usecases/search_tvs.dart';
+import 'package:ditonton/presentation/bloc/tv/search/search_tvs_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import '../movie/search_movies_bloc_test.mocks.dart';
+import 'search_tvs_bloc_test.mocks.dart';
 
-@GenerateMocks([SearchMovies])
+@GenerateMocks([SearchTvs])
 main() {
-  late MockSearchMovies mockGetSearchMovies;
+  late MockSearchTvs mockGetSearchTvs;
 
   setUp(() {
-    mockGetSearchMovies = MockSearchMovies();
+    mockGetSearchTvs = MockSearchTvs();
   });
 
-  final tMovieModel = Movie(
-    adult: false,
-    backdropPath: '/muth4OYamXf41G2evdrLEg8d3om.jpg',
-    genreIds: [14, 28],
-    id: 557,
-    originalTitle: 'Spider-Man',
+  final tTvModel = TvSeries(
+    backdropPath: '/pdfCr8W0wBCpdjbZXSxnKhZtosP.jpg',
+    firstAirDate: '2022-09-01',
+    genreIds: [10765, 10759, 18],
+    id: 84773,
+    name: 'The Lord of the Rings: The Rings of Power',
+    originCountry: ['US'],
+    originalName: 'The Lord of the Rings: The Rings of Power',
+    originalLanguage: 'en',
     overview:
-        'After being bitten by a genetically altered spider, nerdy high school student Peter Parker is endowed with amazing powers to become the Amazing superhero known as Spider-Man.',
-    popularity: 60.441,
-    posterPath: '/rweIrveL43TaxUN0akQEaAXL6x0.jpg',
-    releaseDate: '2002-05-01',
-    title: 'Spider-Man',
-    video: false,
-    voteAverage: 7.2,
-    voteCount: 13507,
+        'Beginning in a time of relative peace, we follow an ensemble cast of characters as they confront the re-emergence of evil to Middle-earth. From the darkest depths of the Misty Mountains, to the majestic forests of Lindon, to the breathtaking island kingdom of Númenor, to the furthest reaches of the map, these kingdoms and characters will carve out legacies that live on long after they are gone.',
+    popularity: 6073.331,
+    posterPath: '/suyNxglk17Cpk8rCM2kZgqKdftk.jpg',
+    voteAverage: 7.6,
+    voteCount: 619,
   );
-  final tMovieList = <Movie>[tMovieModel];
-  final tQuery = 'spiderman';
+  final tTvList = <TvSeries>[tTvModel];
+  final tQuery = 'the rings of power';
 
-  group("SearchMoviesBloc", () {
-    blocTest<SearchMoviesBloc, SearchMoviesState>(
+  group("SearchTvsBloc", () {
+    blocTest<SearchTvsBloc, SearchTvsState>(
       "return list of tv series when searching success",
-      setUp: () => when(mockGetSearchMovies.execute(tQuery))
-          .thenAnswer((_) async => Right(tMovieList)),
-      build: () => SearchMoviesBloc(mockGetSearchMovies),
-      act: (bloc) => bloc.add(SearchMoviesNow(tQuery)),
+      setUp: () => when(mockGetSearchTvs.execute(tQuery))
+          .thenAnswer((_) async => Right(tTvList)),
+      build: () => SearchTvsBloc(mockGetSearchTvs),
+      act: (bloc) => bloc.add(SearchTvsNow(tQuery)),
       expect: () => [
-        SearchMoviesLoading(),
-        SearchMoviesSuccess(tMovieList),
+        SearchTvsLoading(),
+        SearchTvsSuccess(tTvList),
       ],
     );
 
-    blocTest<SearchMoviesBloc, SearchMoviesState>(
+    blocTest<SearchTvsBloc, SearchTvsState>(
       "return message when error",
-      setUp: () => when(mockGetSearchMovies.execute(tQuery))
+      setUp: () => when(mockGetSearchTvs.execute(tQuery))
           .thenAnswer((_) async => Left(ServerFailure("error"))),
-      build: () => SearchMoviesBloc(mockGetSearchMovies),
-      act: (bloc) => bloc.add(SearchMoviesNow(tQuery)),
+      build: () => SearchTvsBloc(mockGetSearchTvs),
+      act: (bloc) => bloc.add(SearchTvsNow(tQuery)),
       expect: () => [
-        SearchMoviesLoading(),
-        SearchMoviesError("error"),
+        SearchTvsLoading(),
+        SearchTvsError("error"),
       ],
     );
   });
