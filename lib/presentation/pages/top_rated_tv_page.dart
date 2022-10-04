@@ -1,7 +1,5 @@
-import 'package:ditonton/presentation/provider/top_rated_tvs_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 
 import '../bloc/tv/top_rated/top_rated_tvs_bloc.dart';
 import '../widgets/tv_list.dart';
@@ -18,9 +16,6 @@ class _TopRatedTvsPageState extends State<TopRatedTvsPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() =>
-        Provider.of<TopRatedTvsNotifier>(context, listen: false)
-            .fetchTopRatedTvs());
   }
 
   @override

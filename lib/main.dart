@@ -5,6 +5,7 @@ import 'package:ditonton/common/utils.dart';
 import 'package:ditonton/firebase_options.dart';
 import 'package:ditonton/injection.dart' as di;
 import 'package:ditonton/presentation/bloc/movie/watchlist/watchlist_movie_bloc.dart';
+import 'package:ditonton/presentation/bloc/tv/watchlist/watchlist_tv_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
@@ -42,31 +43,33 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) =>
-          di.locator<NowPlayingMoviesBloc>()..add(GetNowPlayingEvent()),
+              di.locator<NowPlayingMoviesBloc>()..add(GetNowPlayingEvent()),
         ),
         BlocProvider(
           create: (context) =>
-          di.locator<PopularMoviesBloc>()..add(GetPopularMoviesEvent()),
+              di.locator<PopularMoviesBloc>()..add(GetPopularMoviesEvent()),
         ),
         BlocProvider(
           create: (context) =>
-          di.locator<TopRatedMoviesBloc>()..add(GetTopRatedMoviesEvent()),
+              di.locator<TopRatedMoviesBloc>()..add(GetTopRatedMoviesEvent()),
         ),
         BlocProvider(
           create: (context) =>
-          di.locator<NowPlayingTvsBloc>()..add(GetNowPlayingTvsEvent()),
+              di.locator<NowPlayingTvsBloc>()..add(GetNowPlayingTvsEvent()),
         ),
         BlocProvider(
           create: (context) =>
-          di.locator<PopularTvsBloc>()..add(GetPopularTvsEvent()),
+              di.locator<PopularTvsBloc>()..add(GetPopularTvsEvent()),
         ),
         BlocProvider(
           create: (context) =>
-          di.locator<TopRatedTvsBloc>()..add(GetTopRatedTvsEvent()),
+              di.locator<TopRatedTvsBloc>()..add(GetTopRatedTvsEvent()),
         ),
         BlocProvider(
-          create: (context) =>
-          di.locator<WatchlistMovieBloc>(),
+          create: (context) => di.locator<WatchlistMovieBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => di.locator<WatchlistTvBloc>(),
         ),
       ],
       child: MaterialApp(
@@ -113,7 +116,7 @@ class MyApp extends StatelessWidget {
               final seasonNumber = map['seasonNumber'];
               final seasonName = map['seasonName'];
               return MaterialPageRoute(
-                builder: (_) => TvEpisodesPage(
+                builder: (_) => TvEpisodesProviderPage(
                     movieId: movieId,
                     seasonNumber: seasonNumber,
                     seasonName: seasonName),

@@ -1,17 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/common/constants.dart';
-import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/common/utils.dart';
-import 'package:ditonton/domain/entities/genre.dart';
 import 'package:ditonton/domain/entities/tv_detail.dart';
 import 'package:ditonton/domain/entities/tv_series.dart';
-import 'package:ditonton/presentation/provider/tv_detail_notifier.dart';
-import 'package:ditonton/presentation/widgets/recommendation_horizontal_list.dart';
 import 'package:ditonton/presentation/widgets/season_horizontal_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:provider/provider.dart';
 
 import '../../injection.dart';
 import '../bloc/tv/detail/tv_detail_bloc.dart';
@@ -189,9 +184,7 @@ class _DetailContent extends StatelessWidget {
         CachedNetworkImage(
           imageUrl: movie.posterPath.imageUrl,
           width: screenWidth,
-          placeholder: (context, url) => Center(
-            child: CircularProgressIndicator(),
-          ),
+          placeholder: (context, url) => MyProgressIndicator(),
           errorWidget: (context, url, error) => Icon(Icons.error),
         ),
         Container(

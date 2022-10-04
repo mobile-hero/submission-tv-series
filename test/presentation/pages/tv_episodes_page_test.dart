@@ -1,29 +1,31 @@
-import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/domain/entities/episode.dart';
+import 'package:ditonton/presentation/bloc/tv/episodes/tv_episodes_bloc.dart';
 import 'package:ditonton/presentation/pages/tv_episodes_page.dart';
-import 'package:ditonton/presentation/provider/tv_episodes_notifier.dart';
 import 'package:ditonton/presentation/widgets/my_progress_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:provider/provider.dart';
 
 import 'tv_episodes_page_test.mocks.dart';
 
-@GenerateMocks([TvEpisodesNotifier])
+@GenerateMocks([TvEpisodesBloc])
 void main() {
-  late MockTvEpisodesNotifier mockNotifier;
+  late MockTvEpisodesBloc mockBloc;
 
   setUp(() {
-    mockNotifier = MockTvEpisodesNotifier();
+    mockBloc = MockTvEpisodesBloc();
+    when(mockBloc.stream).thenAnswer((_) => Stream.value(TvEpisodesInitial()));
   });
 
   Widget _makeTestableWidget(Widget body) {
-    return ChangeNotifierProvider<TvEpisodesNotifier>.value(
-      value: mockNotifier,
-      child: MaterialApp(
-        home: body,
+    return MaterialApp(
+      home: BlocProvider<TvEpisodesBloc>.value(
+        value: mockBloc,
+        child: Builder(builder: (context) {
+          return body;
+        }),
       ),
     );
   }
@@ -44,10 +46,9 @@ void main() {
   final tEpisodes = <Episode>[tEpisode];
 
   testWidgets(
-      'List should display one EpisodeCard when only one data source exist',
+      '$TvEpisodesPage List should display one EpisodeCard when only one data source exist',
       (WidgetTester tester) async {
-    when(mockNotifier.seasonState).thenReturn(RequestState.Loaded);
-    when(mockNotifier.seasonEpisodes).thenReturn(tEpisodes);
+    when(mockBloc.state).thenAnswer((_) => TvEpisodesSuccess(tEpisodes));
 
     final episodeCard = find.byKey(ValueKey(tEpisode.episodeNumber));
 
@@ -60,10 +61,9 @@ void main() {
     expect(episodeCard, findsOneWidget);
   });
 
-  testWidgets('Page should display MyProgressIndicator when Loading',
+  testWidgets('$TvEpisodesPage should display MyProgressIndicator when Loading',
       (tester) async {
-    when(mockNotifier.seasonState).thenReturn(RequestState.Loading);
-    when(mockNotifier.seasonEpisodes).thenReturn(<Episode>[]);
+    when(mockBloc.state).thenAnswer((_) => TvEpisodesLoading());
 
     await tester.pumpWidget(_makeTestableWidget(TvEpisodesPage(
       movieId: 1,
@@ -74,10 +74,9 @@ void main() {
     expect(find.byType(MyProgressIndicator), findsOneWidget);
   });
 
-  testWidgets('Page should display text with message when Error',
+  testWidgets('$TvEpisodesPage should display text with message when Error',
       (WidgetTester tester) async {
-    when(mockNotifier.seasonState).thenReturn(RequestState.Error);
-    when(mockNotifier.message).thenReturn('Error message');
+    when(mockBloc.state).thenAnswer((_) => TvEpisodesError('Error message'));
 
     final textFinder = find.byKey(Key('error_message'));
 
