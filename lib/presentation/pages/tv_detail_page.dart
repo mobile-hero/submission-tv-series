@@ -33,7 +33,7 @@ class TvDetailProviderPage extends StatelessWidget {
             ..add(RefreshWatchlistStatus(id)),
         ),
       ],
-      child: Container(),
+      child: TvDetailPage(id: id),
     );
   }
 }
